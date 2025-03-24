@@ -19,7 +19,7 @@ export default async function TopMenu() {
                         session? <TopMenuItem title={`Sign-Out of ${session.user?.name}`} pageRef="/api/auth/signout" />
                         :<TopMenuItem title="Sign-In" pageRef="/api/auth/signin" />
                     }
-                    <TopMenuItem title="My booking" pageRef="/cart" />
+                    <TopMenuItem title="My booking Session" pageRef="/cart" />
                 </div>
             </div>
         </div>
