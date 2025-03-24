@@ -1,25 +1,30 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default async function SignIn() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string|null>(null);
 
-  async function onSubmit(e: React.FormEvent) {
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get('callbackUrl') || '/';
+
+  const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const res = await signIn("credentials", {
+    signIn("credentials", {
       email,
       password,
-      redirect: false
-    })
-
-    if(res?.error) {
-      setError('Invalid credentials');
-    }
-  }
+      redirect: true,
+      callbackUrl: callbackUrl
+    }).then((res) => {
+      if (res?.error) {
+        setError("Invalid credentials");
+      }
+    });
+  };
 
   return (
     <div className="w-full flex justify-center p-9">
@@ -40,12 +45,17 @@ export default async function SignIn() {
           Password
         </label>
         <input
-          className="block mb-5 p-3 bg-gray-50 rounded-xl border border-black w-full"
+          className="block mb-4 p-3 bg-gray-50 rounded-xl border border-black w-full"
           type="password"
           placeholder="••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
+        {
+          error && (
+            <h1 className="text-lg mb-5 text-red-600">Invalid credentials</h1>
+          )
+        }
         <div className="flex justify-center w-full pb-8">
           <button
             className=" text-2xl font-semibold bg-blue-300 hover:bg-blue-400 p-2 px-4 rounded-lg"

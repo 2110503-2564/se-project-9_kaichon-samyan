@@ -15,8 +15,7 @@ export default function Banner() {
   const [index, setIndex] = useState(0);
   const router = useRouter();
   const { data: session } = useSession();
-  console.log(session);
-
+  
   return (
     <div className={styles.banner} onClick={() => setIndex(index + 1)}>
       <Image
