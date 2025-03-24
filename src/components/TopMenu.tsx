@@ -11,16 +11,17 @@ export default async function TopMenu() {
 
     return (
         <div className={styles.menucontainer}>
-            <TopMenuItem title="Booking" pageRef="/booking"/>
             <Image src={'/img/logo.png'} className={styles.logoimg} alt="logo" width={0} height={0} sizes="100vh"/>
-            {
-                session? <Link href="/api/auth/signout"><div className="flex items-center absolute left-0 h-full px-2
-                text-cyan-600 text-sm">Sign-Out of {session.user?.name}</div></Link>
-                :<Link href="/api/auth/signin"><div className="flex items-center absolute left-0 h-full px-2
-                text-cyan-600 text-sm">Sign-In</div></Link>
-            }
-            <Link href="/cart"><div className="flex items-center absolute left-40 h-full px-2
-            text-cyan-600 text-sm">My Booking</div></Link>
+            <TopMenuItem title="Booking" pageRef="/booking"/>
+            <div className="flex items-center w-full flex-row pl-5">
+                <div className="flex gap-8 place-content-between">
+                    {
+                        session? <TopMenuItem title={`Sign-Out of ${session.user?.name}`} pageRef="/api/auth/signout" />
+                        :<TopMenuItem title="Sign-In" pageRef="/api/auth/signin" />
+                    }
+                    <TopMenuItem title="My booking" pageRef="/cart" />
+                </div>
+            </div>
         </div>
     );
 }

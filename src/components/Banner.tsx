@@ -7,7 +7,7 @@ import { useSession } from 'next-auth/react';
 
 export default function Banner() {
 
-    const cover = ['/img/cover.jpg', '/img/cover2.jpg' ,'/img/cover3.jpg', '/img/cover4.jpg']
+    const cover = ['/img/cover.png', '/img/cover2.png' ,'/img/cover3.png', '/img/cover4.png']
     const [index, setIndex] = useState(0)
     const router = useRouter()
     const { data:session } = useSession()
@@ -21,8 +21,8 @@ export default function Banner() {
             style={{ objectFit: "cover" }}
             />
             <div className={styles.bannerText}>
-                <h1 className='text-4xl font-medium font-serif bg-white/30 backdrop-blur-low px-4 py-2 rounded-lg'>where every event finds its venue</h1>
-                <h3 className='text-xl font-serif '>Finding the perfect venue has never been easier. Whether it's a wedding, coperate event, or private party we connecting people to the perfect place</h3>
+                <h1 className='text-4xl font-medium font-serif bg-white/30 backdrop-blur-low px-4 py-2 rounded-lg'>Online Job Fair Registration</h1>
+                <h3 className='text-xl font-serif '>Join on May 10th - 13th, 2022</h3>
             </div>
             {
                 session? <div className='z-30 absolute top-5 right-10 font-semibold text-white text-xl'>
@@ -30,8 +30,8 @@ export default function Banner() {
             }
             <button className='bg-white text-cyan-600 border border-cyan-600 font-semibold py-2 px-2
                               m-2 rounded z-30 absolute bottom-0 right-0 hover:bg-cyan-600 hover:text-white hover:border-transparent'
-                              onClick={ (e) => {e.stopPropagation(); router.push('/venue')} }>
-                                Select Venue
+                              onClick={ (e) => {e.stopPropagation(); router.push('/job')} }>
+                                Register
                               </button>
         </div>
     );

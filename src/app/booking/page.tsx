@@ -4,16 +4,12 @@ import { SelectChangeEvent, TextField } from "@mui/material";
 import { Select } from "@mui/material";
 import { MenuItem } from "@mui/material";
 import { Button } from "@mui/material";
-import { authOptions } from "../api/auth/[...nextauth]/authOptions";
-import { getServerSession } from "next-auth";
-import getUserProfile from "@/libs/getUserProfile";
 import { useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/redux/store";
 import { addBooking } from "@/redux/features/bookSlice";
 import { BookingItem } from "../../../interface";
-import { useSearchParams } from "next/navigation";
 import { useAppSelector } from "@/redux/store";
 
 export default function Booking() {
