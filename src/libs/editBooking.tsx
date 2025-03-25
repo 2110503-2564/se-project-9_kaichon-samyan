@@ -1,5 +1,5 @@
 export default async function editBooking(sessionId: any, token:any, sessionDate:any) {
-  const response = await fetch(`http://frontend-backend-api-45mm.vercel.app/api/v1/session/${sessionId}`, {
+  const response = await fetch(`https://frontend-backend-api-45mm.vercel.app/api/v1/session/${sessionId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
