@@ -8,7 +8,7 @@ export default function Card({ company } : { company:Company }) {
             <h1>Address: {company.address}</h1>
             <h1>Description: {company.description}</h1>
             <h1>Tel: {company.tel}</h1>
-            <h1>Website: {company.website}</h1>
+            <h1 className='text-blue-700'>Website: {company.website}</h1>
         </InteractiveCard>
     );
 }
