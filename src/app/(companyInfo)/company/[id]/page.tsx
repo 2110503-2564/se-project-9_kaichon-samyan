@@ -9,26 +9,28 @@ export default async function CompanyDetailPage({params} : {params: {id: string}
     const companyDetailsData: Company = companyDetails.data;
 
    return(
-           <main>
-               <div className="bg-blue-300 p-5">
-                <h1 className="text-2xl font-bold">{companyDetailsData.companyName}.</h1>
-               </div>
-               <div className="flex gap-3 space-x-5 p-5">
-                <div className="w-[30%]">
-                    <h1 className="bg-gray-100 p-3">Location: {companyDetailsData.address}</h1>
-                    <h1 className="bg-gray-200 p-3">Website: {companyDetailsData.website}</h1>
-                    <h1 className="bg-gray-100 p-3">Description: {companyDetailsData.description}</h1>
-                    <h1 className="bg-gray-200 p-3">Telephone: {companyDetailsData.tel}</h1>
-                </div>
-                <div className="">
+        <main className="flex justify-center items-center mt-28">
+            <div className="flex flex-col items-center sm:flex-row border border-gray-300 shadow-lg rounded-md p-5 gap-5 ">
+                <Image
+                    src={"/img/interviewpic.png"}
+                    alt="cover"
+                    width={200}
+                    height={200}
+                />
+                <div className="w-[300px]">
+                    <h1 className="font-bold text-2xl mb-3">Interview Booking Form</h1>
+                    <h1 className="mb-2" >Location: {companyDetailsData.address}</h1>
+                    <h1 className="mb-2" >Website: {companyDetailsData.website}</h1>
+                    <h1 className="mb-2" >Description: {companyDetailsData.description}</h1>
+                    <h1 className="mb-4" >Telephone: {companyDetailsData.tel}</h1>
                     <Link href={{
                         pathname: "/booking",
                         query: { companyId: companyDetailsData._id }
                     }}>
-                        <button className="p-3 bg-green-300 hover:bg-green-400 rounded-xl">Booking Interview Session</button>
+                        <button className="p-3 bg-gray-300 hover:bg-gray-400 rounded-xl">Select Date</button>
                     </Link>
                 </div>
-               </div>
-           </main>
+            </div>
+        </main>
     );
 }

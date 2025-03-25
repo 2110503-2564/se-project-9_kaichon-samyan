@@ -49,7 +49,13 @@ export default function SessionsPage() {
   }
 
   return (
-    <main>
+    <main style={{
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      gap: "50px",
+      justifyContent: "center", // ทำให้ item ในแถวสุดท้ายชิดซ้าย
+    }}>
       {sessions.length !== 0 ? (
         sessions.map((session) => (
           <SessionList 

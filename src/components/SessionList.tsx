@@ -30,6 +30,10 @@ export default function SessoinList({
   }
 
   function confirmEditBooking() {
+    if(!editBookDate) {
+      return;
+    }
+
     editBooking(
       session.id,
       userSession.data?.user.token,
@@ -46,17 +50,25 @@ export default function SessoinList({
   }
 
   return (
-    <div className="bg-green-100 rounded px-5 mt-20 py-2 my-2 text-black">
-      <p>Company name: {session.company.companyName}</p>
-      <p>Address: {session.company.address}</p>
-      <p>Website: {session.company.website}</p>
-      <p>Tel: {session.company.tel}</p>
-      <p>User: {session.user.name}</p>
-      <p>Email: {session.user.email}</p>
-      <p>Session Date: {session.sessionDate}</p>
+    <div className="relative rounded-lg shadow-lg bg-white px-5 mt-5 py-2 my-2 text-black w-[450px] h-auto ml-5 border-[0.1px] border-grey-200">
+      <div className="flex justify-end">
+        <button
+          className="rounded-md bg-[#ff9393] hover:bg-red-200 px-3 py-2 shadow-sm text-[#ff0000] mt-2 mb-2 font-semibold"
+          onClick={deleteBookingHanler}
+        >
+          Remove Booking
+        </button>
+      </div>
+      <p className="text-md">Company name: {session.company.companyName}</p>
+      <p className="text-md">Address: {session.company.address}</p>
+      <p className="text-md">Website: {session.company.website}</p>
+      <p className="text-md">Tel: {session.company.tel}</p>
+      <p className="text-md">User: {session.user.name}</p>
+      <p className="text-md">Email: {session.user.email}</p>
+      <p className="text-md">Session Date: {session.sessionDate}</p>
       <div>
         <button
-          className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm mb-3 text-white"
+          className="block rounded-md bg-[#b6d5ff] hover:bg-blue-200 px-3 py-2 shadow-sm mb-3 text-[#241cb2] mt-2 font-semibold"
           onClick={editBookingHandler}
         >
           Edit Date
@@ -66,19 +78,25 @@ export default function SessoinList({
             <DateReserve
               onDateChange={(value: Dayjs) => setEditBookDate(value)}
             />
-            <button 
-              onClick={confirmEditBooking}
-              className="p-2 m-2 bg-blue-300 hover:bg-blue-400 rounded-lg"
-            >Confirm</button>
+            {
+              editBookDate ?
+              <button
+                onClick={confirmEditBooking}
+                className="p-2 m-2 bg-[#b6ffd5] hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
+              >
+                Confirm
+              </button>
+              :
+              <button
+                className="p-2 m-2 bg-[#b6ffd5] hover:cursor-not-allowed hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
+                disabled
+              >
+                Confirm
+              </button>
+            }
             {error && <h1 className="text-red-600">{error}</h1>}
           </div>
         )}
-        <button
-          className="block rounded-md bg-sky-600 hover:bg-indigo-600 px-3 py-2 shadow-sm text-white"
-          onClick={deleteBookingHanler}
-        >
-          Remove Booking
-        </button>
       </div>
     </div>
   );

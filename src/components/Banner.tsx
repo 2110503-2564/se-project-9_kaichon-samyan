@@ -1,5 +1,4 @@
 "use client";
-import styles from "./banner.module.css";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -17,35 +16,30 @@ export default function Banner() {
   const { data: session } = useSession();
   
   return (
-    <div className={styles.banner} onClick={() => setIndex(index + 1)}>
-      <Image
-        src={cover[index % 4]}
-        alt="cover"
-        fill={true}
-        priority
-        style={{ objectFit: "cover" }}
+    <div 
+      className="relative w-full h-screen overflow-hidden cursor-pointer margin-0"
+      onClick={() => setIndex(index + 1)}
+    >
+      <Image 
+        src={cover[index % 4]} 
+        alt="cover" 
+        fill 
+        priority 
+        className="object-cover w-full h-full"
       />
-      <div className={styles.bannerText}>
-        <h1 className="text-4xl font-medium font-serif bg-white/30 backdrop-blur-low px-4 py-2 rounded-lg">
-          Online Job Fair Registration
-        </h1>
-        <h3 className="text-xl font-serif ">Join on May 10th - 13th, 2022</h3>
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black bg-opacity-50 p-4 mt-[-50px]">
+        <h1 className="text-5xl md:text-7xl font-bold">Online Job Fair Registration</h1>
+        <h3 className="text-xl md:text-3xl mt-2">Join on May 10th - 13th, 2022</h3>
+        <button
+          className="mt-6 bg-gray-200 text-black font-semibold text-lg md:text-xl py-3 px-6 rounded-lg shadow-lg hover:bg-gray-700 transition"
+          onClick={(e) => {
+            e.stopPropagation();
+            router.push("/company");
+          }}
+        >
+          Register
+        </button>
       </div>
-      {session ? (
-        <div className="z-30 absolute top-5 right-10 font-semibold text-white text-xl">
-          Welcome {session.user.user.name}
-        </div>
-      ) : null}
-      <button
-        className="bg-white text-cyan-600 border border-cyan-600 font-semibold py-2 px-2
-                              m-2 rounded z-30 absolute bottom-0 right-0 hover:bg-cyan-600 hover:text-white hover:border-transparent"
-        onClick={(e) => {
-          e.stopPropagation();
-          router.push("/company");
-        }}
-      >
-        Register
-      </button>
     </div>
   );
 }
