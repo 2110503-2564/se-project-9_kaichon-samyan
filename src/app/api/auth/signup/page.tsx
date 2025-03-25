@@ -1,7 +1,6 @@
 "use client";
 import userSignUp from "@/libs/userSignUp";
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 export default function SignUp() {
@@ -11,8 +10,6 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [tel, setTel] = useState("");
   const [error, setError] = useState<string|null>(null);
-
-  const searchParams = useSearchParams();
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -37,7 +34,7 @@ export default function SignUp() {
         email,
         password,
         redirect: true,
-        callbackUrl: "/"
+        callbackUrl: '/'
       });
     })
     .catch((error) => {
