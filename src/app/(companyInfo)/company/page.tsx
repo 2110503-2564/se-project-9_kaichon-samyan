@@ -6,6 +6,7 @@ import { Suspense } from "react";
 export default async function Company() {
 
     const companies = await getCompanies();
+    console.log(companies);
 
     return(
         <main>

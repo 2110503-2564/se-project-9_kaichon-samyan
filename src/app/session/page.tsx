@@ -17,7 +17,6 @@ export default function SessionsPage() {
 
   useEffect(() => {
     if (userSession?.user.token) {
-      console.log("herer3222");
       getAllSessions(userSession.user.token)
       .then((res) => {
           setSessions(res.data);

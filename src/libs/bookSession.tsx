@@ -7,7 +7,8 @@ export default async function bookSession(companyId: any, date:any, token: any) 
     },
     body: JSON.stringify({
       sessionDate: date
-    })
+    }),
+    cache: "no-store"
   });
 
   const data = await response.json();

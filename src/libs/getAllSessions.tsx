@@ -4,7 +4,8 @@ export default async function getAllSessions(token:string|null|undefined){
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
-    }
+    },
+    cache: "no-store"
   });
 
 
