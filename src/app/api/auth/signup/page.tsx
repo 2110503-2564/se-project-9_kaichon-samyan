@@ -4,7 +4,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function SignIn() {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -25,20 +25,20 @@ export default function SignIn() {
       setError('Please provide all fields');
       return;
     }
+    
+    if(password.length < 6) {
+      setError('Password must be longer 6 characters');
+      return;
+    }
 
     userSignUp(name, email, password, tel)
     .then(() => {
-      return signIn("credentials", {
+        signIn("credentials", {
         email,
         password,
         redirect: true,
         callbackUrl: "/"
       });
-    })
-    .then((res) => {
-      if (res?.error) {
-        setError("Invalid credentials");
-      }
     })
     .catch((error) => {
       setError(error instanceof Error ? error.message : String(error));

@@ -16,7 +16,7 @@ export default async function userLogIn(userEmail:string, userPassword:string) {
     const data = await response.json();
 
     if(!response.ok) {
-        throw new Error("Failed to fetch user log-in")
+        throw new Error(data.msg);
     }
 
     return data;

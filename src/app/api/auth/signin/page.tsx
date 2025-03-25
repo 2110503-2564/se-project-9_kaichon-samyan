@@ -1,28 +1,27 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function SignInPage() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string|null>(null);
 
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
+  const router = useRouter();
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setError(null); // Reset error ก่อนเริ่ม login
+
     signIn("credentials", {
       email,
       password,
-      redirect: false,
-      callbackUrl: callbackUrl
-    })
-    .catch((error) => {
-      console.log('sdaf');
-      setError('Invalid Credentails');
+      redirect: true,
+      callbackUrl
     })
   };
 
