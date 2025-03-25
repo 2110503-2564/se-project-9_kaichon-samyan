@@ -8,6 +8,7 @@ export default async function CompanyList({
   companyJson: Promise<CompanyJson>;
 }) {
   const companyJsonData = await companyJson;
+  console.log(companyJsonData);
 
   return (
     <div
