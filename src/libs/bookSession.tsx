@@ -1,5 +1,5 @@
 export default async function bookSession(companyId: any, date:any, token: any) {
-  const response = await fetch(`http://localhost:5000/api/v1/companies/${companyId}/session`, {
+  const response = await fetch(`http://frontend-backend-api-45mm.vercel.app/api/v1/companies/${companyId}/session`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

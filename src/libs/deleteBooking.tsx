@@ -1,5 +1,5 @@
 export default async function deleteBooking(sessionId: any, token:any) {
-  const response = await fetch(`http://localhost:5000/api/v1/session/${sessionId}`, {
+  const response = await fetch(`http://frontend-backend-api-45mm.vercel.app/api/v1/session/${sessionId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
