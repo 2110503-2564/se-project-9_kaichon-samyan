@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export default function SignIn() {
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string|null>(null);
@@ -17,13 +17,13 @@ export default function SignIn() {
     signIn("credentials", {
       email,
       password,
-      redirect: true,
+      redirect: false,
       callbackUrl: callbackUrl
-    }).then((res) => {
-      if (res?.error) {
-        setError("Invalid credentials");
-      }
-    });
+    })
+    .catch((error) => {
+      console.log('sdaf');
+      setError('Invalid Credentails');
+    })
   };
 
   return (

@@ -4,6 +4,7 @@ import TopMenuItem from "./TopMenuItem";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
 import { Link } from "@mui/material"
+import { session } from "../../interface";
 
 export default async function TopMenu() {
 
@@ -16,10 +17,15 @@ export default async function TopMenu() {
             <div className="flex items-center w-full flex-row pl-5">
                 <div className="flex gap-8 place-content-between">
                     {
-                        session? <TopMenuItem title={`Sign-Out of ${session.user?.name}`} pageRef="/api/auth/signout" />
+                        session? <TopMenuItem title={`Sign-Out of ${session.user?.user.name}`} pageRef="/api/auth/signout" />
                         :<TopMenuItem title="Sign-In" pageRef="/api/auth/signin" />
                     }
-                    <TopMenuItem title="My booking Session" pageRef="/cart" />
+                    {
+                        session?.user.user.role === "admin" ?
+                        <TopMenuItem title="Manage booking session" pageRef="/session" />
+                        :
+                        <TopMenuItem title="My booking Session" pageRef="/session" />
+                    }
                 </div>
             </div>
         </div>

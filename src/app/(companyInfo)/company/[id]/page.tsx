@@ -1,5 +1,4 @@
 import Image from "next/image";
-import getVenue from "@/libs/getVenue";
 import getCompany from "@/libs/getCompany";
 import { Company } from "../../../../../interface";
 import Link from "next/link";

@@ -1,12 +1,12 @@
-export default async function bookSession(companyId: any, date:any, token: any) {
-  const response = await fetch(`http://localhost:5000/api/v1/companies/${companyId}/session`, {
-    method: "POST",
+export default async function editBooking(sessionId: any, token:any, sessionDate:any) {
+  const response = await fetch(`http://localhost:5000/api/v1/session/${sessionId}`, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
       "Authorization": `Bearer ${token}`
     },
     body: JSON.stringify({
-      sessionDate: date
+      sessionDate: sessionDate
     })
   });
 

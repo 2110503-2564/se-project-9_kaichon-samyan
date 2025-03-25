@@ -19,5 +19,5 @@ export default async function userLogIn(userEmail:string, userPassword:string) {
         throw new Error("Failed to fetch user log-in")
     }
 
-    return data.user;
+    return data;
 }
