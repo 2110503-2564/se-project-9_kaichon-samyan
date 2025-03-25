@@ -16,16 +16,16 @@ export default function SessionsPage() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (userSession?.user?.token) {
+    if (userSession?.user.token) {
+      console.log("herer3222");
       getAllSessions(userSession.user.token)
-        .then((res) => {
+      .then((res) => {
           setSessions(res.data);
           setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error('Failed to fetch sessions:', error);
-          setIsLoading(false);
-        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     }
   }, [userSession]);
 
@@ -42,6 +42,8 @@ export default function SessionsPage() {
       )
     );
   }
+
+  console.log(sessions);
 
   if (isLoading) {
     return <h1>Loading...</h1>;

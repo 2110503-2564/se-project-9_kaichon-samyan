@@ -1,5 +1,5 @@
 export default async function getAllSessions(token:string|null|undefined){
-  const response = await fetch('https://frontend-backend-api-45mm.vercel.apps/api/v1/session', {
+  const response = await fetch('https://frontend-backend-api-45mm.vercel.app/api/v1/session', {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
