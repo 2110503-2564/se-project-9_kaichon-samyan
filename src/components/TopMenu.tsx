@@ -3,8 +3,8 @@ import styles from "./topmenu.module.css"
 import TopMenuItem from "./TopMenuItem";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
-import { Link } from "@mui/material"
 import { session } from "../../interface";
+import Link from "next/link";
 
 export default async function TopMenu() {
 
@@ -12,7 +12,9 @@ export default async function TopMenu() {
 
     return (
         <div className={styles.menucontainer}>
-            <Image src={'/img/logo.png'} className={styles.logoimg} alt="logo" width={0} height={0} sizes="100vh"/>
+            <Link href={"/"}>
+                <Image src={'/img/logo.png'} className={styles.logoimg} alt="logo" width={0} height={0} sizes="100vh"/>
+            </Link>
             {/* <TopMenuItem title="Booking" pageRef="/booking"/> */}
             <div className="flex items-center w-full flex-row pl-5">
                 <div className="flex gap-8 place-content-between">
