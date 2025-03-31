@@ -19,21 +19,19 @@ export default function Booking() {
         setDate(dayjs(value).format("YYYY-MM-DD"));
     }
 
-    function bookingSession() {
+    async function bookingSession() {
         if(!date) {
             setError('Nodate.');
             return;
         }
-
-        bookSession(companyId, date, session.data?.user.token)
-        .then(() => {
+        
+        try {
+            await bookSession(companyId, date, session.data?.user.token);
             router.push('/session');
-        })
-        .catch((error) => {
+        } catch (error) {
             const errormsg = error instanceof Error ? error.message : String(error);
-            console.log(errormsg);
             setError(errormsg);
-        });
+        }
     }
 
     return (
