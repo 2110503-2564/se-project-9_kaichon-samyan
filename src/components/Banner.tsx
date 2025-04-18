@@ -28,7 +28,7 @@ export default function Banner() {
         className="object-cover w-full h-full"
       />
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-black bg-opacity-50 p-4 mt-[-50px]">
-        <h1 className="text-5xl md:text-7xl font-bold">Online Job Fair Registration</h1>
+        <h1 className="text-5xl md:text-7xl font-bold">Hotel Registration</h1>
         <h3 className="text-xl md:text-3xl mt-2">Join on May 10th - 13th, 2022</h3>
         <button
           className="mt-6 bg-gray-200 text-black font-semibold text-lg md:text-xl py-3 px-6 rounded-lg shadow-lg hover:bg-gray-700 transition"
