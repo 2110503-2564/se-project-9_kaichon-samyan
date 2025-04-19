@@ -34,7 +34,7 @@ export default function Banner() {
           className="mt-6 bg-gray-200 text-black font-semibold text-lg md:text-xl py-3 px-6 rounded-lg shadow-lg hover:bg-gray-700 transition"
           onClick={(e) => {
             e.stopPropagation();
-            router.push("/company");
+            router.push("/hotel");
           }}
         >
           Register

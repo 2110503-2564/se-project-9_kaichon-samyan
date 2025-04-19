@@ -27,7 +27,7 @@ export default async function CompanyList({
         //     </Link>
         // ))
         companyJsonData.data.map((company) => (
-          <Link href={`/company/${company._id}`} key={company._id}>
+          <Link href={`/hotel/${company._id}`} key={company._id}>
             <Card company={company} />
           </Link>
         ))
