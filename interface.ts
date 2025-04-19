@@ -2,6 +2,7 @@
     _id: string,
     company: string,
     user: string,
+    name: string,
     sessionDate: string,
     createdAt: string,
     __v: number
@@ -24,3 +25,10 @@
     pagination: object,
     data: Company[]
   }
+
+  export type Rating = {
+    username: string;
+    comment: string;
+    stars: number; 
+    timestamp: string; 
+  };
