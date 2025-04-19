@@ -1,14 +1,14 @@
-import { CompanyJson } from "../../interface";
+import { HotelJson } from "../../interface";
 import Card from "./Card";
 import Link from "next/link";
 
-export default async function CompanyList({
-  companyJson,
+export default async function HotelList({
+  hotelJson,
 }: {
-  companyJson: Promise<CompanyJson>;
+  hotelJson: Promise<HotelJson>;
 }) {
-  const companyJsonData = await companyJson;
-  // console.log(companyJsonData);
+  const hotelJsonData = await hotelJson;
+  // console.log(hotelJsonData);
 
   return (
     <div
@@ -21,14 +21,14 @@ export default async function CompanyList({
       }}
     >
       {
-        // companyJsonData.data.map((venueItem) =>(
+        // hotelJsonData.data.map((venueItem) =>(
         //     <Link href={`/venue/${venueItem._id}`} className="w-1/5" key={venueItem._id}>
         //     <Card venueName={venueItem.name} imgSrc={venueItem.picture} key={venueItem._id}/>
         //     </Link>
         // ))
-        companyJsonData.data.map((company) => (
-          <Link href={`/hotel/${company._id}`} key={company._id}>
-            <Card company={company} />
+        hotelJsonData.data.map((hotel) => (
+          <Link href={`/hotel/${hotel._id}`} key={hotel._id}>
+            <Card hotel={hotel} />
           </Link>
         ))
       }

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function RatingForm({ companyId, handleClose }: { companyId: string, handleClose: Function }) {
+export default function RatingForm({ hotelId, handleClose }: { hotelId: string, handleClose: Function }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
@@ -22,7 +22,7 @@ export default function RatingForm({ companyId, handleClose }: { companyId: stri
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await addRating(companyId, rating, comment, session.data?.user.token);
+    await addRating(hotelId, rating, comment, session.data?.user.token);
     setRating(0);
     setComment("");
     router.refresh();

@@ -1,4 +1,4 @@
-export default async function getCompany(id:string) {
+export default async function getHotel(id:string) {
   const response = await fetch(`https://be-se.vercel.app/api/v1/hotels/${id}`, {
     cache: "no-store"
   });

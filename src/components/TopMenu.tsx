@@ -3,7 +3,7 @@ import styles from "./topmenu.module.css"
 import TopMenuItem from "./TopMenuItem";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../app/api/auth/[...nextauth]/authOptions";
-import { session } from "../../interface";
+
 import Link from "next/link";
 
 export default async function TopMenu() {
@@ -24,9 +24,9 @@ export default async function TopMenu() {
                     }
                     {
                         session?.user.user.role === "admin" ?
-                        <TopMenuItem title="Manage booking session" pageRef="/session" />
+                        <TopMenuItem title="Manage reservation booking" pageRef="/session" />
                         :
-                        <TopMenuItem title="My booking Session" pageRef="/session" />
+                        <TopMenuItem title="My booked reservation" pageRef="/session" />
                     }
                 </div>
             </div>

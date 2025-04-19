@@ -2,12 +2,12 @@
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { Company, Rating } from "../../interface";
+import { Hotel, Rating } from "../../interface";
 import RatingForm from "@/components/RatingForm";
 import { useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
 
-export default function CompanyDetailClient({ company }: { company: Company }) {
+export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     const session = useSession();
     const currentUsername = session.data?.user?.user?.name || "";
     const isAdmin = session.data?.user?.user?.role === "admin";
@@ -16,7 +16,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
 
-    const ratings = company.rating || [];
+    const ratings = hotel.rating || [];
 
     const handleCloseRatingForm = () => {
         setShowRatingForm(false);
@@ -37,15 +37,15 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                 <Image src={"/img/interviewpic.png"} alt="cover" width={200} height={200} />
                 <div className="w-[300px]">
                     <h1 className="font-bold text-2xl mb-3">Hotel</h1>
-                    <h1 className="mb-2">Location: {company.address}</h1>
-                    <h1 className="mb-2">Website: {company.website}</h1>
-                    <h1 className="mb-2">Description: {company.description}</h1>
-                    <h1 className="mb-4">Telephone: {company.tel}</h1>
+                    <h1 className="mb-2">Location: {hotel.address}</h1>
+                    <h1 className="mb-2">Website: {hotel.website}</h1>
+                    <h1 className="mb-2">Description: {hotel.description}</h1>
+                    <h1 className="mb-4">Telephone: {hotel.tel}</h1>
                     <div className="flex flex-row justify-between">
                         <Link
                             href={{
                                 pathname: "/booking",
-                                query: { companyId: company._id },
+                                query: { hotelId: hotel._id },
                             }}
                         >
                             <button className="p-3 bg-gray-300 hover:bg-gray-400 rounded-xl">Select Date</button>
@@ -66,7 +66,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
 
             {showRatingForm && (
                 <RatingForm
-                    companyId={company._id}
+                    hotelId={hotel._id}
                     handleClose={handleCloseRatingForm}
                 />
             )}
@@ -99,7 +99,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
 
                             {showDeleteModal && selectedRating && (
                                 <DeleteConfirmationModal
-                                    hotelId={company._id}
+                                    hotelId={hotel._id}
                                     rating={selectedRating}
                                     handleClose={() => setShowDeleteModal(false)}
                                 />

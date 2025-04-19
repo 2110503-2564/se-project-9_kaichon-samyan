@@ -1,6 +1,6 @@
 export interface session {
     _id: string,
-    company: string,
+    hotel: string,
     user: string,
     name: string,
     sessionDate: string,
@@ -8,23 +8,23 @@ export interface session {
     __v: number
   }
 
-  export interface Company {
+  export interface Hotel {
     _id: string,
-    companyName: string,
+    HotelName: string,
     address: string,
     website: string,
     description: string,
     tel: string,
     __v: number,
-    sessions: session[],
+    session: session[],
     rating: Rating[]
   }
 
-  export interface CompanyJson {
+  export interface HotelJson {
     success: boolean,
     count: number,
     pagination: object,
-    data: Company[]
+    data: Hotel[]
   }
 
   export interface Rating {

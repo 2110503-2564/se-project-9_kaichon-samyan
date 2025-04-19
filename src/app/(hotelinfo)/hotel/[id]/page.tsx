@@ -1,14 +1,14 @@
-import getCompany from "@/libs/getCompany";
-import { Company, Rating } from "../../../../../interface";
-import CompanyDetailClient from "@/components/CompanyDetails";
+import getHotel from "@/libs/getHotel";
+import { Hotel, Rating } from "../../../../../interface";
+import HotelDetailClient from "@/components/HotelDetails";
 
-export default async function CompanyDetailPage({ params }: { params: { id: string } }) {
-    const companyDetails = await getCompany(params.id);
-    const companyDetailsData: Company = companyDetails.data;
+export default async function HotelDetailPage({ params }: { params: { id: string } }) {
+    const HotelDetails = await getHotel(params.id);
+    const HotelDetailsData: Hotel = HotelDetails.data;
 
     return (
         <main>
-            <CompanyDetailClient company={companyDetailsData}></CompanyDetailClient>
+            <HotelDetailClient hotel={HotelDetailsData}></HotelDetailClient>
         </main>
     );
 }

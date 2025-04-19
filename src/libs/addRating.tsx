@@ -1,6 +1,6 @@
-export default async function addRating(companyId: any, score:any, comment:any ,token: any) {
+export default async function addRating(HotelId: any, score:any, comment:any ,token: any) {
     console.log("test");
-    const response = await fetch(`http://localhost:5000/api/v1/hotels/${companyId}/rating`, {
+    const response = await fetch(`http://localhost:5000/api/v1/hotels/${HotelId}/rating`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

@@ -1,14 +1,14 @@
 import InteractiveCard from './InteractiveCard';
-import { Company } from '../../interface';
+import { Hotel } from '../../interface';
 
-export default function Card({ company } : { company:Company }) {
+export default function Card({ hotel } : { hotel:Hotel }) {
     return (
         <InteractiveCard>
-            <h1 className='text-2xl text-center mb-1'>{company.companyName}</h1>
-            <h1>Address: {company.address}</h1>
-            <h1>Description: {company.description}</h1>
-            <h1>Tel: {company.tel}</h1>
-            <h1 className='text-blue-700'>Website: {company.website}</h1>
+            <h1 className='text-2xl text-center mb-1'>{hotel.HotelName}</h1>
+            <h1>Address: {hotel.address}</h1>
+            <h1>Description: {hotel.description}</h1>
+            <h1>Tel: {hotel.tel}</h1>
+            <h1 className='text-blue-700'>Website: {hotel.website}</h1>
         </InteractiveCard>
     );
 }
