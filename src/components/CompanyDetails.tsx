@@ -64,7 +64,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                 />
             )}
 
-            <div className="flex flex-col gap-4 w-full max-w-xl">
+            <div className="flex flex-col gap-4 w-full max-w-xl mb-10">
                 {ratings.map((rating, idx) => (
                     <div
                         key={idx}
@@ -97,7 +97,6 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                                     handleClose={() => setShowDeleteModal(false)}
                                 />
                             )}
-
 
                         </div>
                     </div>
