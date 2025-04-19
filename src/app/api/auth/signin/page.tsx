@@ -20,7 +20,7 @@ export default function SignIn() {
     signIn("credentials", {
       email,
       password,
-      redirect: false,
+      redirect: true,
       callbackUrl
     })
   };

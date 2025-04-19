@@ -1,6 +1,7 @@
-export default async function bookSession(companyId: any, score:any, comment:any ,token: any) {
+export default async function addRating(companyId: any, score:any, comment:any ,token: any) {
+    console.log("test");
     const response = await fetch(`http://localhost:5000/api/v1/hotels/${companyId}/rating`, {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`
@@ -11,8 +12,10 @@ export default async function bookSession(companyId: any, score:any, comment:any
       }),
       cache: "no-store"
     });
-  
+    
+    console.log("here");
     const data = await response.json();
+    console.log(data);
   
     if(!response.ok) {
       throw new Error(data.message);

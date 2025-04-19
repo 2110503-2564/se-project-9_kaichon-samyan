@@ -6,44 +6,23 @@ import { Company, Rating } from "../../interface";
 import RatingForm from "@/components/RatingForm";
 import { useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
-import { Anybody } from "next/font/google";
-import { create } from "domain";
-import createRating from "@/libs/createRating";
 
 export default function CompanyDetailClient({ company }: { company: Company }) {
-    const  session  = useSession();
-    const currentUsername = session?.user?.name || "";
-    const isAdmin = session?.user?.role === "admin";
+    const session = useSession();
+    const currentUsername = session.data?.user?.user?.name || "";
+    const isAdmin = session.data?.user?.user?.role === "admin";
     
-    const [showForm, setShowForm] = useState(false);
+    const [showRatingForm, setShowRatingForm] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
-    const [selectedRating, setSelectedRating] = useState<any | null>(null);
+    const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
 
+    const ratings = company.rating || [];
 
-    //dummy 
-    console.log(company)
-    const ratings: Rating[] = company.rating;
+    const handleCloseRatingForm = () => {
+        setShowRatingForm(false);
+    }
 
-    const handleNewRating = async (rating: number, comment: string) => {
-        // TODO: Send rating + comment to API
-        await createRating(company._id,rating,comment,session.data?.user.token);
-        console.log("Submitted:", rating, comment);
-        setShowForm(false);
-    };
-
-    const handleDeleteClick = (rating: any) => {
-        setSelectedRating(rating);
-        setShowDeleteModal(true);
-    };
-
-    const handleConfirmDelete = async (ratingId: string) => {
-        //TODO: Delete rating
-        console.log("Deleted: ", ratingId)
-        setShowDeleteModal(false);
-    };
-      
-      
-      
+    console.log(showDeleteModal)
 
     return (
         <main className="flex justify-center items-center mt-28 flex-col">
@@ -71,17 +50,17 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                             
             <br></br>
             <button
-                onClick={() => setShowForm(true)}
+                onClick={() => setShowRatingForm(true)}
                 className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
             >
                 Add New Rating
             </button>
             <br></br>
 
-            {showForm && (
+            {showRatingForm && (
                 <RatingForm
-                onSubmit={handleNewRating}
-                onCancel={() => setShowForm(false)}
+                    companyId={company._id}
+                    handleClose={handleCloseRatingForm}
                 />
             )}
 
@@ -103,15 +82,9 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                                 </span>
                             ))}
                             <div className="flex gap-2 mt-2">
-                                {rating.user.name === currentUsername && (
-                                    <button className="px-3 py-1 rounded-md text-sm text-white bg-blue-500 hover:bg-blue-600 transition">
-                                    Edit
-                                    </button>
-                                )}
-
                                 {(rating.user.name === currentUsername || isAdmin) && (
-                                    <button className="px-3 py-1 rounded-md text-sm text-white bg-red-500 hover:bg-red-600 transition"
-                                    onClick={() => handleDeleteClick(rating)}>
+                                    <button className="ml-1 px-3 py-1 rounded-md text-sm text-white bg-red-500 hover:bg-red-600 transition"
+                                    onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}>
                                         Delete
                                     </button>
                                 )}
@@ -119,9 +92,9 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
 
                             {showDeleteModal && selectedRating && (
                                 <DeleteConfirmationModal
+                                    hotelId={company._id}
                                     rating={selectedRating}
-                                    onCancel={() => setShowDeleteModal(false)}
-                                    onConfirm={handleConfirmDelete}
+                                    handleClose={() => setShowDeleteModal(false)}
                                 />
                             )}
 

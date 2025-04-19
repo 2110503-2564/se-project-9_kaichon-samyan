@@ -1,4 +1,3 @@
-'use client'
 import getCompany from "@/libs/getCompany";
 import { Company, Rating } from "../../../../../interface";
 import CompanyDetailClient from "@/components/CompanyDetails";

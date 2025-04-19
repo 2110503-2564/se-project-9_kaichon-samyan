@@ -1,4 +1,4 @@
-  export interface session {
+export interface session {
     _id: string,
     company: string,
     user: string,
@@ -16,7 +16,8 @@
     description: string,
     tel: string,
     __v: number,
-    sessions: session[]
+    sessions: session[],
+    rating: Rating[]
   }
 
   export interface CompanyJson {
@@ -26,9 +27,14 @@
     data: Company[]
   }
 
-  export type Rating = {
-    username: string;
+  export interface Rating {
+    _id: string;
+    user: {
+      name: string;
+      email: string;
+      role: string;
+    };
     comment: string;
-    stars: number; 
-    timestamp: string; 
-  };
+    score: number;
+    createdAt: string;
+  }
