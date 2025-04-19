@@ -1,5 +1,5 @@
 export default async function deleteRating(hotelId: any, ratingId: any, token: any) {
-  const response = await fetch(`http://localhost:5000/api/v1/hotels/${hotelId}/rating/${ratingId}`, {
+  const response = await fetch(`https://be-se.vercel.app/api/v1/hotels/${hotelId}/rating/${ratingId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",

@@ -36,7 +36,7 @@ export default function Booking() {
 
     return (
         <main className="w-full flex flex-col items-center">
-            <div className="w-[40%] h-[300px] flex flex-col items-center rounded-lg shadow-lg bg-white 
+            <div className="w-[40%] h-[400px] flex flex-col items-center rounded-lg shadow-lg bg-white 
             px-5 mt-5 py-2 my-2 text-black ml-5 border-[0.1px] border-grey-200">
             <h1 className="mt-8 text-2xl font-medium ">Select Session Date</h1>
             <DateReserve onDateChange={(value:Dayjs)=>setBookDate(value)}/>
