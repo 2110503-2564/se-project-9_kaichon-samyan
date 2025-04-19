@@ -3,17 +3,19 @@ import getAllReservations from "@/libs/getAllReservations"
 import ReservationList from "@/components/ReservationList";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { resourceLimits } from "worker_threads";
+import { useRouter } from "next/navigation";
 
 interface Reservation {
-  id: string;
-  reservationDate: string;
-  // Add other properties as needed
+  _id: string;
 }
 
 export default function ReservationsPage() {
   const { data: userSession } = useSession();
   const [reservations, setReservations] = useState<Reservation[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (userSession?.user.token) {
@@ -28,21 +30,24 @@ export default function ReservationsPage() {
     }
   }, [userSession]);
 
-  function onDelete(item: Reservation) {
-    setReservations(prevState => prevState.filter(reservation => reservation.id !== item.id));
+  function onDelete(item: any) {
+    setReservations(prevState => prevState.filter(reservation => reservation._id !== item._id))
+    router.refresh();
   }
   
-  function onEdit(item: Reservation, editBookDate: string) {
+  function onEdit(item: any, checkIn: any, checkOut: any) {
     setReservations(prevState => 
       prevState.map(res => 
-        res.id === item.id 
-          ? { ...res, reservationDate: `${editBookDate}T00:00:00.000Z` } 
+        res._id === item._id 
+          ? { 
+              ...res, 
+              checkIn: `${checkIn}T00:00:00.000Z`,
+              checkOut: `${checkOut}T00:00:00.000Z`,
+            } 
           : res
       )
     );
   }
-
-  console.log(reservations);
 
   if (isLoading) {
     return <h1>Loading...</h1>;
@@ -59,7 +64,7 @@ export default function ReservationsPage() {
       {reservations.length !== 0 ? (
         reservations.map((reservation) => (
           <ReservationList 
-            key={reservation.id} 
+            key={reservation._id} 
             reservation={reservation} 
             onDelete={onDelete} 
             onEdit={onEdit} 

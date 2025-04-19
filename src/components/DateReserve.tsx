@@ -14,11 +14,6 @@ export default function DateReserve({onDateChange} : {onDateChange:Function}) {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker onChange={(value)=>{setReserveDate(value); onDateChange(value);}}/>
         </LocalizationProvider>
-        <br></br>
-        <br></br>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker onChange={(value)=>{setReserveDate(value); onDateChange(value);}}/>
-        </LocalizationProvider>
         </form>
     );
 }

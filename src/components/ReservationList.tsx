@@ -17,11 +17,12 @@ export default function ReservationList({
 }) {
   const userSession = useSession();
   const [showedit, setShowedit] = useState<boolean>(false);
-  const [editBookDate, setEditBookDate] = useState<Dayjs | null>(null);
+  const [editBookDateIn, setEditBookDateIn] = useState<Dayjs | null>(null);
+  const [editBookDateOut, setEditBookDateOut] = useState<Dayjs | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   function deleteBookingHandler() {
-    deleteBooking(reservation.id, userSession.data?.user.token);
+    deleteBooking(reservation._id, userSession.data?.user.token);
     onDelete(reservation);
   }
 
@@ -30,17 +31,19 @@ export default function ReservationList({
   }
 
   function confirmEditBooking() {
-    if (!editBookDate) {
+    if (!editBookDateIn || !editBookDateOut) {
       return;
     }
 
+    
     editBooking(
-      reservation.id,
+      reservation._id,
       userSession.data?.user.token,
-      editBookDate?.format("YYYY-MM-DD")
+      editBookDateIn?.format("YYYY-MM-DD"),
+      editBookDateOut?.format("YYYY-MM-DD")
     )
-      .then(() => {
-        onEdit(reservation, editBookDate?.format("YYYY-MM-DD"));
+    .then(() => {
+        onEdit(reservation, editBookDateIn?.format("YYYY-MM-DD"), editBookDateOut?.format("YYYY-MM-DD"));
         setShowedit(false);
       })
       .catch((error) => {
@@ -59,13 +62,14 @@ export default function ReservationList({
           Remove Booking
         </button>
       </div>
-      <p className="text-md">Company name: {reservation.company.companyName}</p>
-      <p className="text-md">Address: {reservation.company.address}</p>
-      <p className="text-md">Website: {reservation.company.website}</p>
-      <p className="text-md">Tel: {reservation.company.tel}</p>
+      <p className="text-md">Hotel name: {reservation.hotel.hotelName}</p>
+      <p className="text-md">Address: {reservation.hotel.address}</p>
+      <p className="text-md">Website: {reservation.hotel.website}</p>
+      <p className="text-md">Tel: {reservation.hotel.tel}</p>
       <p className="text-md">User: {reservation.user.name}</p>
       <p className="text-md">Email: {reservation.user.email}</p>
-      <p className="text-md">Reservation Date: {reservation.reservationDate}</p>
+      <p className="text-md">CheckIn Date: {reservation.checkIn}</p>
+      <p className="text-md">CheckOut Date: {reservation.checkOut}</p>
       <div>
         <button
           className="block rounded-md bg-[#b6d5ff] hover:bg-blue-200 px-3 py-2 shadow-sm mb-3 text-[#241cb2] mt-2 font-semibold"
@@ -76,9 +80,12 @@ export default function ReservationList({
         {showedit && (
           <div className="pb-4">
             <DateReserve
-              onDateChange={(value: Dayjs) => setEditBookDate(value)}
+              onDateChange={(value: Dayjs) => setEditBookDateIn(value)}
             />
-            {editBookDate ? (
+            <DateReserve
+              onDateChange={(value: Dayjs) => setEditBookDateOut(value)}
+            />
+            {editBookDateIn && editBookDateOut ? (
               <button
                 onClick={confirmEditBooking}
                 className="p-2 m-2 bg-[#b6ffd5] hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
