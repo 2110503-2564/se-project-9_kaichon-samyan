@@ -1,25 +1,23 @@
 'use client'
 
-export default function InteractiveCard({ children, } : { children : React.ReactNode}) {
-    
-    function onCardMouseAction(event:React.SyntheticEvent) {
-        if(event.type == 'mouseover') {
-            event.currentTarget.classList.remove('shadow-lg');
-            event.currentTarget.classList.add('shadow-2xl');
-            event.currentTarget.classList.remove('bg-white');
-            event.currentTarget.classList.add('bg-neutral-200');
+export default function InteractiveCard({ children }: { children: React.ReactNode }) {
+
+    function onCardMouseAction(event: React.SyntheticEvent) {
+        if (event.type === 'mouseover') {
+            event.currentTarget.classList.remove('shadow-lg', 'bg-white', 'scale-100');
+            event.currentTarget.classList.add('shadow-2xl', 'bg-green-100', 'scale-105');
         } else {
-            event.currentTarget.classList.remove('shadow-2xl');
-            event.currentTarget.classList.add('shadow-lg');
-            event.currentTarget.classList.remove('bg-neutral-200');
-            event.currentTarget.classList.add('bg-white');
+            event.currentTarget.classList.remove('shadow-2xl', 'bg-green-100', 'scale-105');
+            event.currentTarget.classList.add('shadow-lg', 'bg-white', 'scale-100');
         }
     }
-    
+
     return (
-        <div className="w-[320px] h-[200px] rounded-3xl shadow-lg bg-white mb-5 p-3 drop-shadow-md ms-5"
-        onMouseOver={(e) => onCardMouseAction(e)}
-        onMouseOut={(e) => onCardMouseAction(e)}>
+        <div
+            className="w-[400px] h-[260px] rounded-3xl shadow-lg bg-white mb-5 p-4 drop-shadow-md ms-5 transition-all duration-300 ease-in-out scale-100"
+            onMouseOver={onCardMouseAction}
+            onMouseOut={onCardMouseAction}
+        >
             {children}
         </div>
     );

@@ -53,26 +53,50 @@ export default function ReservationList({
   }
 
   return (
-    <div className="relative rounded-lg shadow-lg bg-white px-5 mt-5 py-2 my-2 text-black w-[450px] h-auto ml-5 border-[0.1px] border-grey-200">
+    <div className="relative rounded-lg shadow-lg bg-white px-5 mt-6 py-2 my-2 text-black w-[450px] h-auto ml-5 border-[0.1px] border-grey-200">
       <div className="flex justify-end">
         <button
-          className="rounded-md bg-[#ff9393] hover:bg-red-200 px-3 py-2 shadow-sm text-[#ff0000] mt-2 mb-2 font-semibold"
-          onClick={deleteBookingHandler}
+        className="rounded-md bg-gray-200 text-gray-500 px-3 py-2 shadow-sm mt-2 mb-2 font-semibold transition-all duration-300 hover:bg-red-500 hover:text-black hover:scale-105"          onClick={deleteBookingHandler}
         >
           Remove Booking
         </button>
       </div>
-      <p className="text-md">Hotel name: {reservation.hotel.hotelName}</p>
-      <p className="text-md">Address: {reservation.hotel.address}</p>
-      <p className="text-md">Website: {reservation.hotel.website}</p>
-      <p className="text-md">Tel: {reservation.hotel.tel}</p>
-      <p className="text-md">User: {reservation.user.name}</p>
-      <p className="text-md">Email: {reservation.user.email}</p>
-      <p className="text-md">CheckIn Date: {reservation.checkIn}</p>
-      <p className="text-md">CheckOut Date: {reservation.checkOut}</p>
+        <p className="text-md">
+          <span className="font-semibold">Hotel name:</span>{' '}
+          <span className="font-normal">{reservation.hotel.hotelName}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">Address:</span>{' '}
+          <span className="font-normal">{reservation.hotel.address}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">Website:</span>{' '}
+          <span className="font-normal">{reservation.hotel.website}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">Tel:</span>{' '}
+          <span className="font-normal">{reservation.hotel.tel}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">User:</span>{' '}
+          <span className="font-normal">{reservation.user.name}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">Email:</span>{' '}
+          <span className="font-normal">{reservation.user.email}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">CheckIn Date:</span>{' '}
+          <span className="font-normal">{reservation.checkIn}</span>
+        </p>
+        <p className="text-md">
+          <span className="font-semibold">CheckOut Date:</span>{' '}
+          <span className="font-normal">{reservation.checkOut}</span>
+        </p>
+
       <div>
         <button
-          className="block rounded-md bg-[#b6d5ff] hover:bg-blue-200 px-3 py-2 shadow-sm mb-3 text-[#241cb2] mt-2 font-semibold"
+          className="block rounded-md bg-gray-200 text-gray-500 px-3 py-2 shadow-sm mb-3 mt-2 font-semibold transition-all duration-300 hover:bg-blue-500 hover:text-black hover:scale-105"
           onClick={editBookingHandler}
         >
           Edit Date
@@ -88,13 +112,13 @@ export default function ReservationList({
             {editBookDateIn && editBookDateOut ? (
               <button
                 onClick={confirmEditBooking}
-                className="p-2 m-2 bg-[#b6ffd5] hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
+                className="p-2 m-2 rounded-md bg-green-500 text-black font-semibold transition-all duration-300 hover:scale-105"
               >
                 Confirm
               </button>
             ) : (
               <button
-                className="p-2 m-2 bg-[#b6ffd5] hover:cursor-not-allowed hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
+                className="p-2 m-2 rounded-md bg-gray-300 text-gray-700 font-semibold"
                 disabled
               >
                 Confirm

@@ -1,28 +1,37 @@
 .menucontainer {
     gap: 2rem;
-    height: 50px;
+    height: 70px; 
     background-color: white;
     position: fixed;
-    top: 0px;
-    left: 0px;
-    right: 0px;
+    top: 0;
+    left: 0;
+    right: 0;
     z-index: 30;
-    border-top: 1px solid lightgray;
-    border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid #e5e7eb; 
     display: flex;
-    flex-direction: row-reverse;
-}
-
-.logoimg {
-    height: 100%;
+    align-items: center; 
+    padding: 0 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  }
+  
+  .logoimg {
+    height: 60px;
     width: auto;
-}
-
-.itemcontainer {
+    border-radius: 50px; 
+    object-fit:cover;
+  }
+  
+  .itemcontainer {
     text-align: center;
-    margin-top: auto;
-    margin-bottom: auto;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 10pt;
-    font-weight: 600;
-}
+    font-family:serif;
+    font-size: 13pt;
+    font-weight: 500;
+    color: #1f2937;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .itemcontainer:hover {
+    color: #8681ed; /* hover เป็น indigo */
+    cursor: pointer;
+  }
+  
