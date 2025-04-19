@@ -2,7 +2,8 @@
 //"https://a08-venue-explorer-backend.vercel.app/api/v1/auth/login"
 
 export default async function userLogIn(userEmail:string, userPassword:string) {
-    const response = await fetch("https://frontend-backend-api-45mm.vercel.app/api/v1/auth/login", {
+    console.log("eiei");
+    const response = await fetch("http://localhost:5000/api/v1/auth/login", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
