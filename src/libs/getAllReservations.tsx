@@ -1,5 +1,5 @@
 export default async function getAllReservations(token: string | null | undefined) {
-  const response = await fetch('https://frontend-backend-api-45mm.vercel.app/api/v1/reservation', {
+  const response = await fetch('https://be-se.vercel.app/api/v1/sessions', {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
