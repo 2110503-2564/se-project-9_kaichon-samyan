@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Hotel, Rating } from "../../interface";
 import RatingForm from "@/components/RatingForm";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
 
 export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
@@ -15,18 +15,32 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     const [showRatingForm, setShowRatingForm] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
-
+    const [averageRating, setAverageRating] = useState<number | null>(null);
     const ratings = hotel.rating || [];
+
+    useEffect(() => {
+        if (ratings.length === 0) {
+            setAverageRating(null);
+            return;
+        }
+    
+        const totalScore = ratings.reduce((acc, rating) => acc + rating.score, 0);
+        setAverageRating(totalScore / ratings.length);
+    }, [ratings]);
 
     const handleCloseRatingForm = () => {
         setShowRatingForm(false);
     }
 
-    //make a function to get the average rating from the ratings array
-    const getAverageRating = () => {
-        if (ratings.length === 0) return "No ratings yet";
+    const calculateAverageRating = () => {
+        if (ratings.length === 0) return;
         const totalScore = ratings.reduce((acc, rating) => acc + rating.score, 0);
-        return "Rating : " + (totalScore / ratings.length).toFixed(2);
+        setAverageRating(totalScore / ratings.length);
+    }
+
+    const getAverageRating = () => {
+        if (ratings.length === 0 || averageRating === null) return "No ratings yet";
+        return "Rating : " + averageRating.toFixed(2) + "★";
     };
 
     console.log(showDeleteModal)
