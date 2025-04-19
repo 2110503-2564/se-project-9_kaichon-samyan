@@ -4,7 +4,7 @@ import dayjs, { Dayjs } from "dayjs";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import bookSession from "@/libs/bookSession";
+import bookSession from "@/libs/bookReservation";
 import { useRouter } from "next/navigation";
 
 export default function Booking() {

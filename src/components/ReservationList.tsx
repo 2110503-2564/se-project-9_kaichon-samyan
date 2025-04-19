@@ -6,12 +6,12 @@ import { useState } from "react";
 import DateReserve from "./DateReserve";
 import { Dayjs } from "dayjs";
 
-export default function SessoinList({
-  session,
+export default function ReservationList({
+  reservation,
   onDelete,
   onEdit,
 }: {
-  session: any;
+  reservation: any;
   onDelete: Function;
   onEdit: Function;
 }) {
@@ -20,9 +20,9 @@ export default function SessoinList({
   const [editBookDate, setEditBookDate] = useState<Dayjs | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  function deleteBookingHanler() {
-    deleteBooking(session.id, userSession.data?.user.token);
-    onDelete(session);
+  function deleteBookingHandler() {
+    deleteBooking(reservation.id, userSession.data?.user.token);
+    onDelete(reservation);
   }
 
   function editBookingHandler() {
@@ -30,17 +30,17 @@ export default function SessoinList({
   }
 
   function confirmEditBooking() {
-    if(!editBookDate) {
+    if (!editBookDate) {
       return;
     }
 
     editBooking(
-      session.id,
+      reservation.id,
       userSession.data?.user.token,
       editBookDate?.format("YYYY-MM-DD")
     )
       .then(() => {
-        onEdit(session, editBookDate?.format("YYYY-MM-DD"));
+        onEdit(reservation, editBookDate?.format("YYYY-MM-DD"));
         setShowedit(false);
       })
       .catch((error) => {
@@ -54,18 +54,18 @@ export default function SessoinList({
       <div className="flex justify-end">
         <button
           className="rounded-md bg-[#ff9393] hover:bg-red-200 px-3 py-2 shadow-sm text-[#ff0000] mt-2 mb-2 font-semibold"
-          onClick={deleteBookingHanler}
+          onClick={deleteBookingHandler}
         >
           Remove Booking
         </button>
       </div>
-      <p className="text-md">Company name: {session.company.companyName}</p>
-      <p className="text-md">Address: {session.company.address}</p>
-      <p className="text-md">Website: {session.company.website}</p>
-      <p className="text-md">Tel: {session.company.tel}</p>
-      <p className="text-md">User: {session.user.name}</p>
-      <p className="text-md">Email: {session.user.email}</p>
-      <p className="text-md">Session Date: {session.sessionDate}</p>
+      <p className="text-md">Company name: {reservation.company.companyName}</p>
+      <p className="text-md">Address: {reservation.company.address}</p>
+      <p className="text-md">Website: {reservation.company.website}</p>
+      <p className="text-md">Tel: {reservation.company.tel}</p>
+      <p className="text-md">User: {reservation.user.name}</p>
+      <p className="text-md">Email: {reservation.user.email}</p>
+      <p className="text-md">Reservation Date: {reservation.reservationDate}</p>
       <div>
         <button
           className="block rounded-md bg-[#b6d5ff] hover:bg-blue-200 px-3 py-2 shadow-sm mb-3 text-[#241cb2] mt-2 font-semibold"
@@ -78,22 +78,21 @@ export default function SessoinList({
             <DateReserve
               onDateChange={(value: Dayjs) => setEditBookDate(value)}
             />
-            {
-              editBookDate ?
+            {editBookDate ? (
               <button
                 onClick={confirmEditBooking}
                 className="p-2 m-2 bg-[#b6ffd5] hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
               >
                 Confirm
               </button>
-              :
+            ) : (
               <button
                 className="p-2 m-2 bg-[#b6ffd5] hover:cursor-not-allowed hover:bg-green-200 rounded-lg text-[#1c794c] font-semibold"
                 disabled
               >
                 Confirm
               </button>
-            }
+            )}
             {error && <h1 className="text-red-600">{error}</h1>}
           </div>
         )}

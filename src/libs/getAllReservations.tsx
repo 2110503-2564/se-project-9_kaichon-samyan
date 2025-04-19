@@ -1,5 +1,5 @@
-export default async function getAllSessions(token:string|null|undefined){
-  const response = await fetch('https://frontend-backend-api-45mm.vercel.app/api/v1/session', {
+export default async function getAllReservations(token: string | null | undefined) {
+  const response = await fetch('https://frontend-backend-api-45mm.vercel.app/api/v1/reservation', {
     method: 'GET',
     headers: {
       "Content-Type": "application/json",
@@ -8,8 +8,7 @@ export default async function getAllSessions(token:string|null|undefined){
     cache: "no-store"
   });
 
-
-  if(!response.ok) {
+  if (!response.ok) {
     throw new Error('failed to fetch');
   }
 
