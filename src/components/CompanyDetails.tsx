@@ -22,6 +22,13 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
         setShowRatingForm(false);
     }
 
+    //make a function to get the average rating from the ratings array
+    const getAverageRating = () => {
+        if (ratings.length === 0) return "No ratings yet";
+        const totalScore = ratings.reduce((acc, rating) => acc + rating.score, 0);
+        return "Rating : " + (totalScore / ratings.length).toFixed(2);
+    };
+
     console.log(showDeleteModal)
 
     return (
@@ -43,7 +50,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                         >
                             <button className="p-3 bg-gray-300 hover:bg-gray-400 rounded-xl">Select Date</button>
                         </Link>
-                        <div>Rating: Avg.Rating</div>
+                        <div>{getAverageRating()}</div>
                     </div>
                 </div>
             </div>
