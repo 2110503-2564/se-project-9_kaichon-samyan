@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function Booking() {
     const searchParams = useSearchParams();
-    const companyId = searchParams.get('companyId');
+    const companyId = searchParams.get('hotelId');
     const session = useSession();
     const [error, setError] = useState<string|null>();
     const [date, setDate] = useState<string|null>();
@@ -27,7 +27,7 @@ export default function Booking() {
         
         try {
             await bookSession(companyId, date, session.data?.user.token);
-            router.push('/session');
+            router.push('/revervation');
         } catch (error) {
             const errormsg = error instanceof Error ? error.message : String(error);
             setError(errormsg);
