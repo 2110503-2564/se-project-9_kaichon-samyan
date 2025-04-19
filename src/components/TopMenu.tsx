@@ -24,9 +24,9 @@ export default async function TopMenu() {
                     }
                     {
                         session?.user.user.role === "admin" ?
-                        <TopMenuItem title="Manage reservation booking" pageRef="/session" />
+                        <TopMenuItem title="Manage reservation booking" pageRef="/reservation" />
                         :
-                        <TopMenuItem title="My booked reservation" pageRef="/session" />
+                        <TopMenuItem title="My booked reservation" pageRef="/reservation" />
                     }
                 </div>
             </div>
