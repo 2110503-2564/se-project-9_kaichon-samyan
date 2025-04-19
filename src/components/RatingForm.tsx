@@ -12,6 +12,7 @@ export default function RatingForm({ onSubmit, onCancel }: RatingFormProps) {
   const [comment, setComment] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
+    console.log()
     e.preventDefault();
     onSubmit(rating, comment);
     setRating(0);

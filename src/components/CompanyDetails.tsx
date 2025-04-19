@@ -7,9 +7,11 @@ import RatingForm from "@/components/RatingForm";
 import { useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
 import { Anybody } from "next/font/google";
+import { create } from "domain";
+import createRating from "@/libs/createRating";
 
 export default function CompanyDetailClient({ company }: { company: Company }) {
-    const { data: session } = useSession();
+    const  session  = useSession();
     const currentUsername = session?.user?.name || "";
     const isAdmin = session?.user?.role === "admin";
     
@@ -19,29 +21,12 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
 
 
     //dummy 
-    const ratings: Rating[] = [
-        {
-          username: "Ajarntoe",
-          comment: "This hotel very very good krub 4/5",
-          stars: 4,
-          timestamp: "2025-04-19T12:19:00",
-        },
-        {
-          username: "Guy",
-          comment: "This hotel sucks",
-          stars: 1,
-          timestamp: "2021-01-02T12:34:00",
-        },
-        {
-          username: "username",
-          comment: "[Comments]",
-          stars: 0,
-          timestamp: "2023-10-12T09:00:00",
-        }
-      ];
+    console.log(company)
+    const ratings: Rating[] = company.rating;
 
-    const handleNewRating = (rating: number, comment: string) => {
+    const handleNewRating = async (rating: number, comment: string) => {
         // TODO: Send rating + comment to API
+        await createRating(company._id,rating,comment,session.data?.user.token);
         console.log("Submitted:", rating, comment);
         setShowForm(false);
     };
@@ -65,7 +50,7 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
             <div className="flex flex-col items-center sm:flex-row border border-gray-300 shadow-lg rounded-md p-5 gap-5">
                 <Image src={"/img/interviewpic.png"} alt="cover" width={200} height={200} />
                 <div className="w-[300px]">
-                    <h1 className="font-bold text-2xl mb-3">Interview Booking Form</h1>
+                    <h1 className="font-bold text-2xl mb-3">Hotel</h1>
                     <h1 className="mb-2">Location: {company.address}</h1>
                     <h1 className="mb-2">Website: {company.website}</h1>
                     <h1 className="mb-2">Description: {company.description}</h1>
@@ -104,27 +89,27 @@ export default function CompanyDetailClient({ company }: { company: Company }) {
                 {ratings.map((rating, idx) => (
                     <div
                         key={idx}
-                        className={`border p-4 rounded-md ${rating.username === currentUsername ? 'bg-blue-50' : ''}`}
+                        className={`border p-4 rounded-md ${rating.user.name === currentUsername ? 'bg-blue-50' : ''}`}
                     >
                         <div className="flex justify-between items-center">
-                            <p className="font-semibold">Rating by {rating.username}</p>
-                            <p>{rating.timestamp}</p>
+                            <p className="font-semibold">Rating by {rating.user.name}</p>
+                            <p>{rating.createdAt}</p>
                         </div>
                         <p className="my-2">{rating.comment}</p>
                         <div className="flex items-center">
                             {[...Array(5)].map((_, i) => (
-                                <span key={i} className={i < rating.stars ? "text-yellow-400" : "text-gray-300"}>
+                                <span key={i} className={i < rating.score ? "text-yellow-400" : "text-gray-300"}>
                                     ★
                                 </span>
                             ))}
                             <div className="flex gap-2 mt-2">
-                                {rating.username === currentUsername && (
+                                {rating.user.name === currentUsername && (
                                     <button className="px-3 py-1 rounded-md text-sm text-white bg-blue-500 hover:bg-blue-600 transition">
                                     Edit
                                     </button>
                                 )}
 
-                                {(rating.username === currentUsername || isAdmin) && (
+                                {(rating.user.name === currentUsername || isAdmin) && (
                                     <button className="px-3 py-1 rounded-md text-sm text-white bg-red-500 hover:bg-red-600 transition"
                                     onClick={() => handleDeleteClick(rating)}>
                                         Delete
