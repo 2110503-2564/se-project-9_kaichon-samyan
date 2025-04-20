@@ -93,7 +93,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                     >
                         <div className="flex justify-between items-center">
                             <p className="font-semibold">Rating by {rating.user.name}</p>
-                            <p>{rating.createdAt}</p>
+                            <p>{rating.createdAt ? rating.createdAt.split("T")[0] : ""}  {rating.createdAt ? rating.createdAt.split("T")[1].split(".")[0] : ""}</p>
                         </div>
                         <p className="my-2">{rating.comment}</p>
                         <div className="flex items-center">
@@ -104,13 +104,21 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                             ))}
                             <div className="flex gap-2 mt-2">
                                 {(rating.user.name === currentUsername || isAdmin) && (
+                                    <button className="ml-1 px-3 py-1 rounded-md text-sm text-black bg-gray-300 hover:bg-zinc-500 transition"
+                                    onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}>
+                                        Edit
+                                    </button>
+                                )}
+                            </div>
+                            <div className="flex gap-2 mt-2">
+                                {(rating.user.name === currentUsername || isAdmin) && (
                                     <button className="ml-1 px-3 py-1 rounded-md text-sm text-white bg-red-500 hover:bg-red-600 transition"
                                     onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}>
                                         Delete
                                     </button>
                                 )}
                             </div>
-
+                            
                             {showDeleteModal && selectedRating && (
                                 <DeleteConfirmationModal
                                     hotelId={hotel._id}
