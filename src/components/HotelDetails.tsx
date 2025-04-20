@@ -6,6 +6,7 @@ import { Hotel, Rating } from "../../interface";
 import RatingForm from "@/components/RatingForm";
 import { useEffect, useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
+import RatingEdit from "@/components/RatingEdit";
 
 export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     const session = useSession();
@@ -14,6 +15,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     
     const [showRatingForm, setShowRatingForm] = useState(false);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditForm,setShowEditForm] = useState(false);
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
     const [averageRating, setAverageRating] = useState<number | null>(null);
     const ratings = hotel.rating || [];
@@ -105,9 +107,16 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                             <div className="flex gap-2 mt-2">
                                 {(rating.user.name === currentUsername || isAdmin) && (
                                     <button className="ml-1 px-3 py-1 rounded-md text-sm text-black bg-gray-300 hover:bg-zinc-500 transition"
-                                    onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}>
+                                    onClick={() => {setShowEditForm(true); setSelectedRating(rating)}}>
                                         Edit
                                     </button>
+                                )}
+                                {showEditForm && selectedRating && (
+                                    <RatingEdit
+                                        hotelId={hotel._id}
+                                        rating={selectedRating}
+                                        handleClose={() => setShowEditForm(false)}
+                                    />
                                 )}
                             </div>
                             <div className="flex gap-2 mt-2">
