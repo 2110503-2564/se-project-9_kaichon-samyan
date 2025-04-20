@@ -18,7 +18,7 @@ export default function DeleteConfirmationModal({hotelId, rating, handleClose}: 
   }
 
   return (
-    <div className="fixed inset-0 flex justify-center items-center z-50">
+
       <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
         <h2 className="text-xl font-semibold mb-4 text-red-600">
           Confirm Deletion
@@ -52,6 +52,5 @@ export default function DeleteConfirmationModal({hotelId, rating, handleClose}: 
           </button>
         </div>
       </div>
-    </div>
   );
 }

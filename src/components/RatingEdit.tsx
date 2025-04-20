@@ -35,7 +35,8 @@ export default function RatingForm({ hotelId, rating, handleClose }: { hotelId: 
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-opacity-50 flex justify-center items-center z-50">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md"
@@ -81,6 +82,7 @@ export default function RatingForm({ hotelId, rating, handleClose }: { hotelId: 
           </button>
         </div>
       </form>
+    </div>
     </div>
   );
 }
