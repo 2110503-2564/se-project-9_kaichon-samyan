@@ -7,6 +7,7 @@ import RatingForm from "@/components/RatingForm";
 import { useEffect, useState } from "react";
 import DeleteConfirmationModal from "./RatingDelete";
 import RatingEdit from "@/components/RatingEdit";
+import { useRouter } from "next/navigation";
 
 export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     const session = useSession();
@@ -18,6 +19,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     const [showEditForm,setShowEditForm] = useState(false);
     const [selectedRating, setSelectedRating] = useState<Rating | null>(null);
     const [averageRating, setAverageRating] = useState<number | null>(null);
+    const [loading, setLoading] = useState(false);
     const ratings = hotel.rating || [];
 
     useEffect(() => {
@@ -34,21 +36,21 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
         setShowRatingForm(false);
     }
 
-    const calculateAverageRating = () => {
-        if (ratings.length === 0) return;
-        const totalScore = ratings.reduce((acc, rating) => acc + rating.score, 0);
-        setAverageRating(totalScore / ratings.length);
-    }
-
     const getAverageRating = () => {
         if (ratings.length === 0 || averageRating === null) return "No ratings yet";
         return "Rating : " + averageRating.toFixed(2) + "★";
     };
 
-    console.log(showDeleteModal)
-
     return (
         <main className="flex justify-center items-center mt-28 flex-col">
+            {loading && (
+                <div className="fixed inset-0 bg-white bg-opacity-80 flex justify-center items-center z-50">
+                    <div className="flex flex-col items-center gap-2">
+                        <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <p className="text-blue-500 font-semibold">Loading...</p>
+                    </div>
+                </div>
+            )}
             <div className="flex flex-col items-center sm:flex-row border border-gray-300 shadow-lg rounded-md p-5 gap-5">
                 <Image src={"/img/interviewpic.png"} alt="cover" width={200} height={200} />
                 <div className="w-[300px]">
@@ -84,6 +86,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                 <RatingForm
                     hotelId={hotel._id}
                     handleClose={handleCloseRatingForm}
+                    setLoading={(b:boolean) => setLoading(b)}
                 />
             )}
 
@@ -116,6 +119,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                                         hotelId={hotel._id}
                                         rating={selectedRating}
                                         handleClose={() => setShowEditForm(false)}
+                                        setLoading={(b:boolean) => setLoading(b)}
                                     />
                                 )}
                             </div>
@@ -133,11 +137,12 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                     </div>
                 ))}
                 {showDeleteModal && selectedRating && (
-                    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
+                    <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-20">
                         <DeleteConfirmationModal
                             hotelId={hotel._id}
                             rating={selectedRating}
-                            handleClose={() => setShowDeleteModal(false)}
+                            handleClose={() => {setShowDeleteModal(false)}}
+                            setLoading={(b:boolean) => setLoading(b)}
                         />
                     </div>
                 )}

@@ -12,15 +12,15 @@ export default function DeleteConfirmationModal({
   hotelId,
   rating,
   handleClose,
+  setLoading
 }: {
   hotelId: string;
   rating: Rating;
   handleClose: Function;
+  setLoading: Function
 }) {
   const session = useSession();
   const router = useRouter();
-
-  const [loading, setLoading] = useState(false);
 
   const handleDelete = async () => {
     setLoading(true);
@@ -32,14 +32,6 @@ export default function DeleteConfirmationModal({
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg w-[90%] max-w-md">
-      {loading && (
-        <div className="absolute inset-0 bg-white bg-opacity-80 flex justify-center items-center z-50 rounded-lg">
-          <div className="flex flex-col items-center gap-2">
-            <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-            <p className="text-blue-500 font-semibold">Deleting...</p>
-          </div>
-        </div>
-      )}
       <h2 className="text-xl font-semibold mb-4 text-red-600">
         Confirm Deletion
       </h2>

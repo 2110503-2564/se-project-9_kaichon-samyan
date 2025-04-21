@@ -6,7 +6,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useEffect } from "react";
 
-export default function RatingForm({ hotelId, handleClose }: { hotelId: string, handleClose: Function }) {
+export default function RatingForm({
+  hotelId,
+  handleClose,
+  setLoading
+}: {
+  hotelId: string;
+  handleClose: Function;
+  setLoading: Function;
+}) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
 
@@ -22,15 +30,17 @@ export default function RatingForm({ hotelId, handleClose }: { hotelId: string, 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     await addRating(hotelId, rating, comment, session.data?.user.token);
     setRating(0);
     setComment("");
     router.refresh();
     handleClose();
+    setLoading(false);
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-20">
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-lg shadow-lg p-6 w-[90%] max-w-md"
