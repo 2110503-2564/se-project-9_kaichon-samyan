@@ -35,6 +35,7 @@ export default function ReservationList({
       return;
     }
 
+    console.log("here");
     
     editBooking(
       reservation._id,
