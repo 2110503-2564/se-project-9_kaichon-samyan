@@ -42,7 +42,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
     };
 
     return (
-        <main className="flex justify-center items-center mt-28 flex-col">
+        <main className="flex flex-col font-['Playfair_Display'] items-center px-4 sm:px-8 w-full max-w-3xl mx-auto pt-20">
             {loading && (
                 <div className="fixed inset-0 bg-white bg-opacity-80 flex justify-center items-center z-50">
                     <div className="flex flex-col items-center gap-2">
@@ -51,36 +51,40 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                     </div>
                 </div>
             )}
-            <div className="flex flex-col items-center sm:flex-row border border-gray-300 shadow-lg rounded-md p-5 gap-5">
-                <Image src={hotel.picture} alt="cover" width={200} height={200} />
-                <div className="w-[300px]">
-                    <h1 className="font-bold text-2xl mb-3">{hotel.hotelName}</h1>
-                    <h1 className="mb-2">Location: {hotel.address}</h1>
-                    <h1 className="mb-2">Website: {hotel.website}</h1>
-                    <h1 className="mb-2">Description: {hotel.description}</h1>
-                    <h1 className="mb-4">Telephone: {hotel.tel}</h1>
-                    <div className="flex flex-row justify-between">
-                        <Link
-                            href={{
-                                pathname: "/booking",
-                                query: { hotelId: hotel._id },
-                            }}
-                        >
-                            <button className="p-3 bg-gray-300 hover:bg-gray-400 rounded-xl">Select Date</button>
+            <div className="flex flex-col sm:flex-row items-center sm:items-start border border-gray-300 shadow-lg rounded-xl p-6 gap-8 bg-white w-full max-w-full">
+                <div className="relative w-[250px] h-[250px] overflow-hidden rounded-lg shadow-xl">
+                    <Image 
+                        src={hotel.picture} 
+                        alt="cover" 
+                        layout="fill" 
+                        objectFit="cover" 
+                        className="rounded-lg"
+                    />
+                </div>
+                <div className="flex flex-col w-full sm:w-[300px] text-gray-800">
+                    <h1 className="font-medium font-semibold text-4xl text-gray-900 mx-auto mb-4">{hotel.hotelName}</h1>
+                    <hr className="border-t-3 border-gray-800 mb-4 w-[100px] mx-auto" />
+                    <h2 className="text-lg font-medium text-gray-600 mb-2">Location: <span className="font-semibold text-gray-800">{hotel.address}</span></h2>
+                    <h2 className="text-lg font-medium text-gray-600 mb-2">Website: <a href={hotel.website} className="text-blue-600 hover:text-blue-800" target="_blank" rel="noopener noreferrer">{hotel.website}</a></h2>
+                    <h2 className="text-lg font-medium text-gray-600 mb-4">Description: {hotel.description}</h2>
+                    <h2 className="text-lg font-medium text-gray-600 mb-6">Telephone: {hotel.tel}</h2>
+                    <div className="flex flex-col sm:flex-row justify-between items-center">
+                        <Link href={{ pathname: "/booking", query: { hotelId: hotel._id } }}>
+                            <button className="px-6 py-3 bg-black text-white rounded-xl shadow-lg hover:bg-gray-900 transition duration-300">Select Date</button>
                         </Link>
-                        <div>{getAverageRating()}</div>
+                        <div className="mt-4 sm:mt-0 text-xl font-semibold text-yellow-600">{getAverageRating()}</div>
                     </div>
                 </div>
             </div>
-                            
-            <br></br>
-            <button
-                onClick={() => setShowRatingForm(true)}
-                className="mt-4 px-4 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
-            >
-                Add New Rating
-            </button>
-            <br></br>
+            
+            <div className="mt-6">
+                <button
+                    onClick={() => setShowRatingForm(true)}
+                    className="px-6 py-2 bg-black text-white rounded-md hover:bg-gray-900 transition duration-300"
+                >
+                    Add New Rating
+                </button>
+            </div>
 
             {showRatingForm && (
                 <RatingForm
@@ -90,49 +94,51 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                 />
             )}
 
-            <div className="flex flex-col gap-4 w-full max-w-xl mb-10">
+            <div className="flex flex-col gap-6 w-full max-w-4xl mb-10 mt-8">
                 {ratings.map((rating, idx) => (
                     <div
                         key={idx}
-                        className={`border p-4 rounded-md ${rating.user.name === currentUsername ? 'bg-blue-50' : ''}`}
+                        className={`border p-6 rounded-lg shadow-md ${rating.user.name === currentUsername ? 'bg-blue-50' : 'bg-white'}`}
                     >
                         <div className="flex justify-between items-center">
-                            <p className="font-semibold">Rating by {rating.user.name}</p>
-                            <p>{rating.createdAt ? rating.createdAt.split("T")[0] : ""}  {rating.createdAt ? rating.createdAt.split("T")[1].split(".")[0] : ""}</p>
+                            <p className="font-semibold text-lg text-gray-700">Rating by {rating.user.name}</p>
+                            <p className="text-sm text-gray-500">{rating.createdAt ? rating.createdAt.split("T")[0] : ""}  {rating.createdAt ? rating.createdAt.split("T")[1].split(".")[0] : ""}</p>
                         </div>
-                        <p className="my-2">{rating.comment}</p>
-                        <div className="flex items-center">
+                        <p className="my-3 text-gray-700">{rating.comment}</p>
+                        <div className="flex items-center gap-2">
                             {[...Array(5)].map((_, i) => (
                                 <span key={i} className={i < rating.score ? "text-yellow-400" : "text-gray-300"}>
                                     ★
                                 </span>
                             ))}
-                            <div className="flex gap-2 mt-2">
-                                {(rating.user.name === currentUsername || isAdmin) && (
-                                    <button className="ml-1 px-3 py-1 rounded-md text-sm text-black bg-gray-300 hover:bg-zinc-500 transition"
-                                    onClick={() => {setShowEditForm(true); setSelectedRating(rating)}}>
-                                        Edit
-                                    </button>
-                                )}
-                                {showEditForm && selectedRating && (
-                                    <RatingEdit
-                                        hotelId={hotel._id}
-                                        rating={selectedRating}
-                                        handleClose={() => setShowEditForm(false)}
-                                        setLoading={(b:boolean) => setLoading(b)}
-                                    />
-                                )}
-                            </div>
-                            <div className="flex gap-2 mt-2">
-                                {(rating.user.name === currentUsername || isAdmin) && (
-                                    <button className="ml-1 px-3 py-1 rounded-md text-sm text-white bg-red-500 hover:bg-red-600 transition"
-                                    onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}>
-                                        Delete
-                                    </button>
-                                )}
-                            </div>
-                            
+                        </div>
 
+                        <div className="flex gap-4 mt-4">
+                            {(rating.user.name === currentUsername || isAdmin) && (
+                                <button 
+                                    className="px-4 py-2 text-sm text-white bg-yellow-500 rounded-md shadow-md hover:bg-yellow-600 transition duration-300"
+                                    onClick={() => {setShowEditForm(true); setSelectedRating(rating)}}
+                                >
+                                    Edit
+                                </button>
+                            )}
+                            {showEditForm && selectedRating && (
+                                <RatingEdit
+                                    hotelId={hotel._id}
+                                    rating={selectedRating}
+                                    handleClose={() => setShowEditForm(false)}
+                                    setLoading={(b:boolean) => setLoading(b)}
+                                />
+                            )}
+
+                            {(rating.user.name === currentUsername || isAdmin) && (
+                                <button 
+                                    className="px-4 py-2 text-sm text-white bg-red-500 rounded-md shadow-md hover:bg-red-600 transition duration-300"
+                                    onClick={() => {setShowDeleteModal(true); setSelectedRating(rating)}}
+                                >
+                                    Delete
+                                </button>
+                            )}
                         </div>
                     </div>
                 ))}
@@ -141,7 +147,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                         <DeleteConfirmationModal
                             hotelId={hotel._id}
                             rating={selectedRating}
-                            handleClose={() => {setShowDeleteModal(false)}}
+                            handleClose={() => setShowDeleteModal(false)}
                             setLoading={(b:boolean) => setLoading(b)}
                         />
                     </div>
