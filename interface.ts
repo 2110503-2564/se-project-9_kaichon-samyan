@@ -17,7 +17,8 @@ export interface Hotel {
   tel: string,
   __v: number,
   session: session[],
-  rating: Rating[]
+  rating: Rating[],
+  picture: string
 }
 
 export interface HotelJson {

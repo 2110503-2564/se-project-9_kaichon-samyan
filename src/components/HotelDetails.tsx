@@ -52,7 +52,7 @@ export default function HotelDetailClient({ hotel }: { hotel: Hotel }) {
                 </div>
             )}
             <div className="flex flex-col items-center sm:flex-row border border-gray-300 shadow-lg rounded-md p-5 gap-5">
-                <Image src={"/img/interviewpic.png"} alt="cover" width={200} height={200} />
+                <Image src={hotel.picture} alt="cover" width={200} height={200} />
                 <div className="w-[300px]">
                     <h1 className="font-bold text-2xl mb-3">{hotel.hotelName}</h1>
                     <h1 className="mb-2">Location: {hotel.address}</h1>
