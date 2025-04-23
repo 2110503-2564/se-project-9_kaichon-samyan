@@ -39,3 +39,13 @@ export interface Rating {
   score: number;
   createdAt: string;
 }
+export interface UserProfile {
+  _id: string;
+  name:string;
+  password:string;
+  email:string;
+  tel:string;
+  role:string;
+  profileImg:string;
+}
+
