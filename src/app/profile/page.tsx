@@ -4,13 +4,8 @@ import getMe from "@/libs/getMe";
 import { redirect } from "next/navigation";
 
 export default async function ProfilePage() {
-  console.log("Starting ProfilePage component");
-  
   const session = await getServerSession(authOptions);
-  console.log("Session retrieved:", session ? "Session exists" : "No session");
-  
   if (!session || !session.user) {
-    console.log("No session or user found, redirecting to signin");
     redirect("/api/auth/signin");
   }
   const token = session.user.token;
