@@ -44,6 +44,10 @@ export default async function TopMenu() {
             pageRef="/reservation"
           />
         )}
+         <TopMenuItem
+            title="My Profile"
+            pageRef="/profile"
+          />
       </div>
     </div>
   );
