@@ -4,6 +4,8 @@ import getMe from "@/libs/getMe";
 import { redirect } from "next/navigation";
 import uploadProfilePic from "@/libs/uploadProfile";
 import { revalidatePath } from "next/cache";
+import DragDropUpload from "@/components/DragDrop";
+
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
@@ -49,15 +51,8 @@ export default async function ProfilePage() {
             </div>
 
             {/* Upload Form */}
-            <form action={uploadPic}>
-              <input type="file" name="profilePic" accept="image/*" className="mb-2" />
-              <button
-                type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-              >
-                Upload New Picture
-              </button>
-            </form>
+            <DragDropUpload onUpload={uploadPic} />
+
 
             {/* User Details */}
             <div className="border-t border-gray-200 pt-4">
