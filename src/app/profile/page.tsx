@@ -8,10 +8,11 @@ import { revalidatePath } from "next/cache";
 
 export default async function ProfilePage() {
   const session = await getServerSession(authOptions);
-  if (!session || !session.user) {
-    redirect("/api/auth/signin");
-  }
-  const token = session.user.token;
+  
+  // if (!session || !session.user) {
+  //   redirect("/api/auth/signin");
+  // }
+  const token = session?.user.token;
   if (!token) {
     return <div>Error: No token found in session</div>;
   }

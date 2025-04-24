@@ -47,5 +47,6 @@ export interface UserProfile {
   tel:string;
   role:string;
   profileImg:string;
+  username:string;
 }
 

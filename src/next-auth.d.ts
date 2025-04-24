@@ -11,6 +11,8 @@ declare module "next-auth" {
                 role: string,
                 createdAt: string
                 id: string,
+                username:username,
+                profileImg: string
             },
         iat: number,
         exp: number,
