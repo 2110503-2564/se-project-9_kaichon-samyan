@@ -26,7 +26,7 @@ export default async function TopMenu() {
       <div className="flex items-center gap-8 mt-1">
         {session ? (
           <TopMenuItem
-            title={`Sign-Out of ${session.user?.user.name}`}
+            title={`Sign-Out of ${session.user.user.username || session.user?.user.name}`}
             pageRef="/api/auth/signout"
           />
         ) : (
@@ -47,7 +47,9 @@ export default async function TopMenu() {
          <TopMenuItem
             title="My Profile"
             pageRef="/profile"
-          />
+          >
+            <img src={session?.user.user.profileImg} alt="profileImg" />
+          </TopMenuItem>
       </div>
     </div>
   );
