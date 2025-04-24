@@ -3,12 +3,33 @@
 import React from "react";
 import { useState } from "react";
 import DragDropUpload from "./DragDrop";
+import changeUserName from "@/libs/changeUserName";
+import { useSession } from "next-auth/react";
+import changePassword from "@/libs/changePassword";
+import { useRouter } from "next/navigation";
 
 export default function Profile({ profile, token, uploadPic }: { profile: any; token: string; uploadPic: (formData: FormData) => void }) {
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
   const [username, setUsername] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const session = useSession();
+  const router = useRouter();
+
+  const onConfirm = async ()=>{
+    if(username!==""){
+      await changeUserName(username,session.data?.user.token);
+    }
+   if(newPassword!==""){
+    await changePassword(oldPassword,newPassword,session.data?.user.token);
+   }
+    setUsername("");
+    setNewPassword("");
+    setOldPassword("");
+    router.refresh();
+  }
+
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -125,7 +146,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
             
             <div className="flex flex-row justify-center gap-4">
             <button
-              onClick={() => setIsPopupOpen(false)}
+              onClick={() => {onConfirm();setIsPopupOpen(false);}}
               className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
             >
               Confirm
