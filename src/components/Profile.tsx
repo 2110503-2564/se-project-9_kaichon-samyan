@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { useSession } from "next-auth/react";
 import { useState } from "react";
 import DragDropUpload from "./DragDrop";
-import uploadProfilePic from "@/libs/uploadProfile";
-import { revalidatePath } from "next/cache";
 
 export default function Profile({ profile, token, uploadPic }: { profile: any; token: string; uploadPic: (formData: FormData) => void }) {
   const [isPopupOpen, setIsPopupOpen] = React.useState(false);
+  const [username, setUsername] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -53,7 +53,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
                 onClick={() => setIsPopupOpen(true)}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
               >
-                Edit Profile Picture
+                Edit Profile
               </button>
             </div>
           </div>
@@ -62,7 +62,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
       {/*Popup for edit*/}
       {isPopupOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
-          <div className="bg-white rounded-lg shadow-lg w-[50%] p-6 w-full max-w-lg text-center items-center">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[25%] text-center items-center">
             <h1 className="text-2xl font-bold text-center mb-6 text-blue-600">Edit Profile</h1>
 
             <div className="flex flex-row p-2 items-center justify-center">
@@ -75,6 +75,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
                       className="w-full h-full object-cover object-center"
                     />
                   </div>
+                  
                 ) : (
                   <div className="w-32 h-32 rounded-full bg-blue-100 flex items-center justify-center border-2 border-blue-500">
                     <span className="text-2xl font-bold text-blue-500">
@@ -87,25 +88,55 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
                 <DragDropUpload onUpload={uploadPic} setIsPopupOpen={setIsPopupOpen} />
               </div>
             </div>
-            <div className="flex flex-col sm:flex-row items-center gap-4 p-4">
-              <input
-                type="text"
-                placeholder="New Username"
-                className="w-full sm:w-[250px] px-4 py-2 bg-sky-50 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300"
-              />
-              <input
-                type="text"
-                placeholder="New Password"
-                className="w-full sm:w-[250px] px-4 py-2 bg-sky-50 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300"
-              />
+            <div className="flex flex-row sm:flex-col items-center gap-4 p-4">
+              <div>
+                <h4 className="flex flex-row mb-5">Change Username : </h4>
+                <input
+                  type="text"
+                  placeholder="New Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full sm:w-[250px] px-4 py-2 bg-sky-50 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300"
+                />
+              </div>
+              
+              <div>
+                <h4 className="flex flex-row mb-5">Change Password : </h4>
+                <div className="flex flex-col gap-4">
+                  <input
+                    type="password"
+                    placeholder="Old Password"
+                    value={oldPassword}
+                    onChange={(e) => setOldPassword(e.target.value)}
+                    className="w-full sm:w-[250px] px-4 py-2 bg-sky-50 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300"
+                  />
+                  <input
+                    type="password"
+                    placeholder="New Password"
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    className="w-full sm:w-[250px] px-4 py-2 bg-sky-50 border border-sky-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-400 transition duration-300"
+                  />
+                </div>
+                
+              </div>
+              
             </div>
-
+            
+            <div className="flex flex-row justify-center gap-4">
+            <button
+              onClick={() => setIsPopupOpen(false)}
+              className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+            >
+              Confirm
+            </button>
             <button
               onClick={() => setIsPopupOpen(false)}
               className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
             >
               Close
             </button>
+            </div>
           </div>
         </div>
       )}
