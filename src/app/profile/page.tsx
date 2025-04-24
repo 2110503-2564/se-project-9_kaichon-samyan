@@ -18,10 +18,18 @@ export default async function ProfilePage() {
   const uploadPic = async (formData: FormData) => {
     "use server";
     const file = formData.get("profilePic") as File;
-    if (file && file.size > 0) {
-      await uploadProfilePic(token);
+    if (!file || file.size === 0) return;
+    
+    try {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+      const base64Image = `data:${file.type};base64,${buffer.toString('base64')}`;
+      await uploadProfilePic(token, base64Image);
+      revalidatePath("/profile"); // Adjust this path as needed
+    } catch (error) {
+      console.error('Error uploading profile picture:', error);
+      throw error;
     }
-    revalidatePath("/profile"); // Adjust this path as needed
   };
 
   try {
