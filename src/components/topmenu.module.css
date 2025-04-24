@@ -28,6 +28,10 @@
     font-weight: 500;
     color: #1f2937;
     transition: color 0.2s ease-in-out;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
   }
   
   .itemcontainer:hover {
