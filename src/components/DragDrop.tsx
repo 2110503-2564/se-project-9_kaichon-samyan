@@ -102,7 +102,7 @@ export default function DragDropUpload({
 
       {isUploading && <p className="text-sm text-blue-500 text-center">Uploading...</p>}
 
-      {preview && (
+      {/* {preview && (
         <div className="flex justify-between space-x-2">
           <button
             type="button"
@@ -121,7 +121,7 @@ export default function DragDropUpload({
             {isUploading ? "Uploading..." : "Confirm Upload"}
           </button>
         </div>
-      )}
+      )} */}
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function Banner() {
         priority
         className="object-cover w-full h-full transition-all duration-700 ease-in-out"
       />
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-gradient-to-t from-black/80  to-transparent px-6">
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white bg-gradient-to-t from-black/80 via-black/40 to-transparent px-6">
         <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight drop-shadow-lg">Hotel Booking</h1>
         <h3 className="text-2xl md:text-3xl  mt-4 font-light ">Book the Stay. Live the Story.</h3>
         <button
