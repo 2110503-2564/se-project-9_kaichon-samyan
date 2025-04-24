@@ -2,7 +2,7 @@
 
 import { useState, useRef } from "react";
 
-export default function DragDropUpload({ onUpload }: { onUpload: (formData: FormData) => void }) {
+export default function DragDropUpload({onUpload, setIsPopupOpen}: {onUpload: (formData: FormData) => void;setIsPopupOpen: (open: boolean) => void;}) {
   const [dragging, setDragging] = useState(false);
   const [preview, setPreview] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
