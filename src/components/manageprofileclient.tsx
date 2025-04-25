@@ -1,4 +1,3 @@
-// app/manage-profile/ManageProfileClient.tsx (Client Component)
 'use client';
 
 import { useState } from "react";
@@ -20,11 +19,17 @@ export default function ManageProfileClient({ users }: Props) {
             key={user._id}
             className="bg-white shadow-md rounded-lg p-4 flex items-center space-x-4"
           >
-            <img
-              src={user.profileImg}
-              alt={user.username}
-              className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
-            />
+            {user.profileImg ? (
+              <img
+                src={user.profileImg}
+                alt="Profile"
+                className="w-16 h-16 rounded-full object-cover border-2 border-gray-300"
+              />
+            ) : (
+              <span className="w-16 h-16 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center text-2xl font-bold">
+                {user.name.charAt(0).toUpperCase()}
+              </span>
+            )}
             <div>
               <p className="text-lg font-semibold">{user.username}</p>
               <p className="text-sm text-gray-500">{user.email}</p>

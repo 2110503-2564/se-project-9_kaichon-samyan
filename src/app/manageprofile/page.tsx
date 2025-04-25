@@ -2,7 +2,7 @@
 import getAllUsers from "@/libs/getAllUser";
 import { authOptions } from "../api/auth/[...nextauth]/authOptions";
 import { getServerSession } from "next-auth";
-import ManageProfileClient from "@/components/manageprofileclient";
+import ManageProfileClient from "@/components/ManageProfileClient";
 
 export default async function ManageProfilePage() {
   const session = await getServerSession(authOptions);
