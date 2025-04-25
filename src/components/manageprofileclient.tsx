@@ -17,11 +17,16 @@ export default function ManageProfileClient({ users }: Props) {
       try {
         if(session?.user.token)
           await deleteUserPic(session?.user.token,id);
+
+          setUserList(prevList =>
+            prevList.map(user =>
+              user._id === id ? { ...user, profileImg: '' } : user
+            )
+          );
       }
       catch (err) {
         console.error("Delete failed",err);
       }
-      router.refresh();
     }
   return (
     <div className="p-6">
@@ -49,7 +54,9 @@ export default function ManageProfileClient({ users }: Props) {
             </div>
             <div className="flex flex-row gap-4">
                   <button
-                    onClick={() =>{handleDelete(user._id);router.refresh();} }
+                    onClick={() =>{
+                      handleDelete(user._id);
+                    } }
                     className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
                   >
                     Delete Picture
