@@ -2,23 +2,44 @@
 
 import { useState } from "react";
 import { UserProfile } from "../../interface";
-
+import deleteUserPic from "@/libs/deleteUserPic";
+import { useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 interface Props {
   users: UserProfile[];
 }
 
 export default function ManageProfileClient({ users }: Props) {
   const [userList, setUserList] = useState<UserProfile[]>(users);
+  const {data : session} = useSession();
+  const router = useRouter();
+  const handleDelete = async (id:string) => {
+      try {
+        if(session?.user.token)
+          await deleteUserPic(session?.user.token,id);
 
+          setUserList(prevList =>
+            prevList.map(user =>
+              user._id === id ? { ...user, profileImg: '' } : user
+            )
+          );
+      }
+      catch (err) {
+        console.error("Delete failed",err);
+      }
+    }
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">User Profiles</h1>
+      <h1 className="text-4xl font-extrabold text-center text-blue-700 mt-2 mb-8 decoration-blue-400">
+        Manage User Profiles
+      </h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {userList.map((user) => (
           <div
             key={user._id}
-            className="bg-white shadow-md rounded-lg p-4 flex items-center space-x-4"
+            className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between"
           >
+            <div className="flex items-center space-x-4">
             {user.profileImg ? (
               <img
                 src={user.profileImg}
@@ -31,9 +52,21 @@ export default function ManageProfileClient({ users }: Props) {
               </span>
             )}
             <div>
-              <p className="text-lg font-semibold">{user.username}</p>
+              {user.username ? (
+                <p className="text-lg font-semibold">{user.username}</p>
+              ) : (
+                <p className="text-lg font-semibold text-red-500 italic">No username</p>
+              )}
               <p className="text-sm text-gray-500">{user.email}</p>
             </div>
+          </div>
+
+          <button
+            onClick={() => handleDelete(user._id)}
+            className="px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
+          >
+            Delete Picture
+          </button>
           </div>
         ))}
       </div>
