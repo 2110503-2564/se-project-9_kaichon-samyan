@@ -30,11 +30,7 @@ export interface HotelJson {
 
 export interface Rating {
   _id: string;
-  user: {
-    name: string;
-    email: string;
-    role: string;
-  };
+  user: UserProfile
   comment: string;
   score: number;
   createdAt: string;
