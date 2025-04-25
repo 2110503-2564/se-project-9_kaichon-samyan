@@ -30,7 +30,8 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
       setNewPassword("");
       setOldPassword("");
       router.refresh();
-      setIsPopupOpen(false); // 👈 ย้ายมาที่นี่
+      setIsPopupOpen(false); 
+      setIsPopupOpen2(false);
     } catch (error) {
       console.error("Error updating profile:", error);
     } finally {
