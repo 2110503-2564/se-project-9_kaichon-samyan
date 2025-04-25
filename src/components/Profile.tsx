@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 
 export default function Profile({ profile, token, uploadPic }: { profile: any; token: string; uploadPic: (formData: FormData) => void }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isPopupOpen2, setIsPopupOpen2] = useState(false);
   const [username, setUsername] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -71,12 +72,12 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
             ].map(([label, value]) => (
               <div className="flex py-2 border-t border-gray-100" key={label}>
                 <span className="font-semibold w-24 text-gray-600">{label}:</span>
-                <span className="text-gray-800 capitalize">{value}</span>
+                <span className="text-gray-800">{value}</span>
               </div>
             ))}
             <div className="flex justify-center mt-4">
               <button
-                onClick={() => setIsPopupOpen(true)}
+                onClick={() => setIsPopupOpen2(true)}
                 className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
               >
                 Edit Profile
@@ -85,14 +86,14 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
           </div>
         </div>
       </div>
-
-      {isPopupOpen && (
+      
+      {isPopupOpen2 && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-6 w-[25%] text-center items-center relative">
             <h1 className="text-2xl font-bold text-center mb-6 text-blue-600">Edit Profile</h1>
 
-            <div className="flex flex-row p-2 items-center justify-center">
-              <div className="flex justify-center items-center w-1/2">
+            <div className="flex flex-row sm:flex-col items-center gap-3 p-4">
+              <div className="items-center">
                 {profile.profileImg ? (
                   <div className="w-32 h-32 m-2 rounded-full overflow-hidden border-2 border-blue-500">
                     <img
@@ -109,12 +110,14 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
                   </div>
                 )}
               </div>
-              <div className="flex justify-center items-center w-1/2">
-                <DragDropUpload onUpload={uploadPic} setIsPopupOpen={setIsPopupOpen} />
-              </div>
-            </div>
 
-            <div className="flex flex-row sm:flex-col items-center gap-4 p-4">
+              <button
+                onClick={() => setIsPopupOpen(true)}
+                className="px-4 py-2 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300"
+              >
+                Edit Profile Picture
+              </button>
+
               <div>
                 <h4 className="flex flex-row mb-5">Change Username : </h4>
                 <input
@@ -147,6 +150,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
               </div>
             </div>
 
+
             <div className="flex flex-row justify-center gap-4">
               <button
                 onClick={onConfirm}
@@ -156,7 +160,7 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
               </button>
 
               <button
-                onClick={() => setIsPopupOpen(false)}
+                onClick={() => setIsPopupOpen2(false)}
                 className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
               >
                 Close
@@ -172,6 +176,38 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
           </div>
         </div>
       )}
+
+      {/* Popup for editing profile picture */}
+      {isPopupOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-[25%] text-center items-center relative">
+            <h1 className="text-2xl font-bold text-center mb-6 text-blue-600">Edit Profile Picture</h1>
+
+            <div className="flex flex-row p-2 items-center justify-center">
+              <div className="flex justify-center items-center w-1/2">
+                <DragDropUpload onUpload={uploadPic} setIsPopupOpen={setIsPopupOpen} />
+              </div>
+            </div>
+
+            {loading && (
+              <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 rounded-lg z-50">
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="text-blue-500 ml-3">Loading</div>
+              </div>
+            )}
+            <div className="flex flex-row justify-center gap-4">
+              <button
+                onClick={() => setIsPopupOpen(false)}
+                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      
     </div>
   );
 }
