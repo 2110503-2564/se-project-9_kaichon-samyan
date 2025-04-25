@@ -7,6 +7,16 @@ import ManageProfileClient from "@/components/manageprofileclient";
 export default async function ManageProfilePage() {
   const session = await getServerSession(authOptions);
 
+  if(session?.user.user.role !== "admin") {
+    return (
+      <div className="flex justify-center items-center mt-40">
+        <h1 className="text-5xl">
+          YOU ARE NOT ADMIN.
+        </h1>
+      </div>
+    )
+  }
+
   const token = session?.user?.token;
 
   if (!token) {
