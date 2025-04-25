@@ -1,7 +1,9 @@
 "use client";
+import changeUserName from "@/libs/changeUserName";
 import userSignUp from "@/libs/userSignUp";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
+import { UserProfile } from "../../../../../interface";
 
 export default function SignUp() {
   const [email, setEmail] = useState("");
@@ -10,6 +12,7 @@ export default function SignUp() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [tel, setTel] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [userName,setUserName] = useState("");
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -28,7 +31,11 @@ export default function SignUp() {
       return;
     }
 
-    userSignUp(name, email, password, tel)
+
+     userSignUp(name, email, password, tel)
+     .then(async(data)=>{
+      await changeUserName(userName,data.token)
+     })
       .then(() => {
         signIn("credentials", {
           email,
@@ -40,6 +47,8 @@ export default function SignUp() {
       .catch((error) => {
         setError(error instanceof Error ? error.message : String(error));
       });
+
+     
   }
 
   return (
@@ -52,6 +61,16 @@ export default function SignUp() {
 
         <div>
           <label className="block text-lg mb-1 text-gray-700">Username</label>
+          <input
+            className="w-full p-3 bg-gray-50 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none"
+            type="text"
+            placeholder="John Doe"
+            value={userName}
+            onChange={(e) => setUserName(e.target.value)}
+          />
+        </div>
+        <div>
+          <label className="block text-lg mb-1 text-gray-700">Name</label>
           <input
             className="w-full p-3 bg-gray-50 rounded-xl border border-gray-300 focus:ring-2 focus:ring-blue-400 outline-none"
             type="text"

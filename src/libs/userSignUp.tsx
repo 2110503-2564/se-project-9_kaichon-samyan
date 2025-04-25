@@ -11,12 +11,12 @@ export default async function userSignUp(name:string, email: string, password:st
       tel
     })
   });
-
+  console.log("1")
   const data = await response.json();
 
   if(!response.ok) {
     throw new Error(data.message);
   }
-
+  console.log(data);
   return data;
 }
