@@ -66,10 +66,10 @@ export default function ManageProfileClient({ users }: Props) {
               </button>
             </div>
 
-            {/* Spinner */}
             {loadingId === user._id && (
               <div className="absolute inset-0 bg-white bg-opacity-80 flex justify-center items-center rounded-lg z-10">
-                <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="text-blue-500 ml-3">Loading</div>
               </div>
             )}
           </div>
