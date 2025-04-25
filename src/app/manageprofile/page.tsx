@@ -6,7 +6,7 @@ import ManageProfileClient from "@/components/ManageProfileClient";
 
 export default async function ManageProfilePage() {
   const session = await getServerSession(authOptions);
-  const token = session?.user?.token; 
+
   if(session?.user.user.role !== "admin") {
     return (
       <div className="flex justify-center items-center mt-40">
@@ -16,6 +16,8 @@ export default async function ManageProfilePage() {
       </div>
     )
   }
+
+  const token = session?.user?.token;
 
   if (!token) {
     return <div>Error: No token found in session</div>;
