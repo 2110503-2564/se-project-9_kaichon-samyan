@@ -6,7 +6,7 @@ import changeUserName from "@/libs/changeUserName";
 import { useSession } from "next-auth/react";
 import changePassword from "@/libs/changePassword";
 import { useRouter } from "next/navigation";
-
+import deleteProfilePic from "@/libs/deleteProfile";
 export default function Profile({ profile, token, uploadPic }: { profile: any; token: string; uploadPic: (formData: FormData) => void }) {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [isPopupOpen2, setIsPopupOpen2] = useState(false);
@@ -38,7 +38,16 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
       setLoading(false);
     }
   };
-
+  const handleDeleteProfilePic = async () => {
+    try {
+      if(session.data?.user.token)
+        await deleteProfilePic(session.data?.user.token);
+    }
+    catch (err) {
+      console.error("Delete failed",err);
+    }
+    router.refresh();
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -196,13 +205,23 @@ export default function Profile({ profile, token, uploadPic }: { profile: any; t
                 <div className="text-blue-500 ml-3">Loading</div>
               </div>
             )}
-            <div className="flex flex-row justify-center gap-4">
+          <div className="flex flex-row items-center justify-center inset-0 gap-4">
+            <div className="flex flex-row gap-4">
+              <button
+                onClick={() =>{handleDeleteProfilePic();setIsPopupOpen(false);} }
+                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
+              >
+                Delete Picture
+              </button>
+            </div>
+            <div className="flex flex-row gap-4">
               <button
                 onClick={() => setIsPopupOpen(false)}
                 className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
               >
-                Close
+                Close Menu
               </button>
+            </div>
             </div>
           </div>
         </div>
