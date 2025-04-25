@@ -2,14 +2,27 @@
 
 import { useState } from "react";
 import { UserProfile } from "../../interface";
-
+import deleteUserPic from "@/libs/deleteUserPic";
+import { useSession } from 'next-auth/react';
+import { useRouter } from "next/navigation";
 interface Props {
   users: UserProfile[];
 }
 
 export default function ManageProfileClient({ users }: Props) {
   const [userList, setUserList] = useState<UserProfile[]>(users);
-
+  const {data : session} = useSession();
+  const router = useRouter();
+  const handleDelete = async (id:string) => {
+      try {
+        if(session?.user.token)
+          await deleteUserPic(session?.user.token,id);
+      }
+      catch (err) {
+        console.error("Delete failed",err);
+      }
+      router.refresh();
+    }
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">User Profiles</h1>
@@ -34,6 +47,14 @@ export default function ManageProfileClient({ users }: Props) {
               <p className="text-lg font-semibold">{user.username}</p>
               <p className="text-sm text-gray-500">{user.email}</p>
             </div>
+            <div className="flex flex-row gap-4">
+                  <button
+                    onClick={() =>{handleDelete(user._id);router.refresh();} }
+                    className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
+                  >
+                    Delete Picture
+                </button>
+              </div>
           </div>
         ))}
       </div>
