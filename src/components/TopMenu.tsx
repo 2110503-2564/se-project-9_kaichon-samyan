@@ -62,6 +62,14 @@ export default async function TopMenu() {
             />
           }
         </TopMenuItem>
+        {session?.user.user.role === "admin" ? (
+          <TopMenuItem
+            title="Manage User Profile"
+            pageRef="/manageprofile"
+          />
+        ) : (
+          <div> </div>
+        )}
       </div>
     </div>
   );
