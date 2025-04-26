@@ -5,41 +5,40 @@ import { UserProfile } from "../../interface";
 import deleteUserPic from "@/libs/deleteUserPic";
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+
 interface Props {
   users: UserProfile[];
 }
 
 export default function ManageProfileClient({ users }: Props) {
   const [userList, setUserList] = useState<UserProfile[]>(users);
-  const {data : session} = useSession();
+  const { data: session } = useSession();
+  const [loadingId, setLoadingId] = useState<string | null>(null);
   const router = useRouter();
-  const handleDelete = async (id:string) => {
-      try {
-        if(session?.user.token)
-          await deleteUserPic(session?.user.token,id);
 
-          setUserList(prevList =>
-            prevList.map(user =>
-              user._id === id ? { ...user, profileImg: '' } : user
-            )
-          );
+  const handleDelete = async (id: string) => {
+    setLoadingId(id);
+    try {
+      if (session?.user.token) {
+        await deleteUserPic(session.user.token, id);
       }
-      catch (err) {
-        console.error("Delete failed",err);
-      }
+    } catch (err) {
+      console.error("Delete failed", err);
+    } finally {
+      setLoadingId(null);
+      router.refresh();
     }
+  };
+
   return (
     <div className="p-6">
-      <h1 className="text-4xl font-extrabold text-center text-blue-700 mt-2 mb-8 decoration-blue-400">
-        Manage User Profiles
-      </h1>
+      <h1 className="text-2xl font-bold mb-4">User Profiles</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {userList.map((user) => (
+        {users.map((user) => (
           <div
             key={user._id}
-            className="bg-white shadow-md rounded-lg p-4 flex items-center justify-between"
+            className="bg-white shadow-md rounded-lg p-4 flex items-center space-x-4 relative"
           >
-            <div className="flex items-center space-x-4">
             {user.profileImg ? (
               <img
                 src={user.profileImg}
@@ -51,22 +50,28 @@ export default function ManageProfileClient({ users }: Props) {
                 {user.name.charAt(0).toUpperCase()}
               </span>
             )}
-            <div>
-              {user.username ? (
-                <p className="text-lg font-semibold">{user.username}</p>
-              ) : (
-                <p className="text-lg font-semibold text-red-500 italic">No username</p>
-              )}
+
+            <div className="flex-1">
+              <p className="text-lg font-semibold">{user.username}</p>
               <p className="text-sm text-gray-500">{user.email}</p>
             </div>
-          </div>
 
-          <button
-            onClick={() => handleDelete(user._id)}
-            className="px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300"
-          >
-            Delete Picture
-          </button>
+            <div className="flex flex-row gap-4">
+              <button
+                onClick={() => handleDelete(user._id)}
+                className="mt-4 px-4 py-2 bg-red-600 text-white rounded-md shadow-md hover:bg-red-700 transition duration-300 disabled:opacity-50"
+                disabled={loadingId === user._id}
+              >
+                {loadingId === user._id ? "Deleting..." : "Delete Picture"}
+              </button>
+            </div>
+
+            {loadingId === user._id && (
+              <div className="absolute inset-0 bg-white bg-opacity-80 flex justify-center items-center rounded-lg z-10">
+                <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                <div className="text-blue-500 ml-3">Loading</div>
+              </div>
+            )}
           </div>
         ))}
       </div>
