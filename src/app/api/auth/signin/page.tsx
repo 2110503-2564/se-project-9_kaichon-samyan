@@ -35,12 +35,12 @@ export default function SignIn() {
 
         <div>
           <label htmlFor="email" className="block text-lg font-medium text-gray-700 mb-1">
-            Email
+            Email or Username
           </label>
           <input
             id="email"
             type="text"
-            placeholder="example@gmail.com"
+            placeholder="your email or username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="w-full px-4 py-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50"
