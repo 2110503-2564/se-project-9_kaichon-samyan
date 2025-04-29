@@ -76,12 +76,13 @@ export default function RatingForm({
           </div>
 
           <textarea
-            placeholder="Write your comment..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            className="w-full border rounded-md p-2 mb-4"
-            rows={3}
-          />
+          placeholder="Write your comment..."
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          className="w-full border rounded-md p-2 mb-4"
+          rows={3}
+          required
+        />
 
           <div className="flex justify-end gap-3">
             <button

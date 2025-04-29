@@ -68,7 +68,7 @@ export default function RatingForm({
           ))}
         </div>
         {error && 
-          <h1 className="text-red-600">Score should &gt; 1</h1>
+          <h1 className="text-red-600">Score should &gt;= 1</h1>
         }
 
         <textarea
