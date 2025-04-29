@@ -77,7 +77,6 @@ export default function RatingForm({
           onChange={(e) => setComment(e.target.value)}
           className="w-full border rounded-md p-2 mb-4"
           rows={3}
-          required
         />
 
         <div className="flex justify-end gap-3">
