@@ -17,6 +17,7 @@ export default function RatingForm({
 }) {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
+  const [error, setError] = useState(false);
 
   const router = useRouter();
 
@@ -30,6 +31,11 @@ export default function RatingForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if(rating === 0) {
+      setError(true);
+      return;
+    }
+
     setLoading(true);
     await addRating(hotelId, rating, comment, session.data?.user.token);
     setRating(0);
@@ -61,6 +67,9 @@ export default function RatingForm({
             </button>
           ))}
         </div>
+        {error && 
+          <h1 className="text-red-600">Score should &gt; 1</h1>
+        }
 
         <textarea
           placeholder="Write your comment..."
